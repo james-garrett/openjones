@@ -188,7 +188,7 @@ public class Player extends AbstractPlayer {
     
     @Override
     public String toString() {
-        return "name:"+_name +" clock:"+getHour()+" weeks:"+getWeeks()+" cash:"+getCash()+" rentDebt:"+getRentDebt();
+        return "name:"+_name +" clock:"+getHour()+"/" +timeLeft()+ " weeks:"+getWeeks()+" cash:"+getCash()+" rentDebt:"+getRentDebt();
     }
 
     public int getCash() {
