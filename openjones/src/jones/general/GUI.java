@@ -5,6 +5,7 @@
 package jones.general;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -52,7 +53,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         _jonesImg = img.getImage().getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
         _possibletActions = null;
         initComponents2();
-        //initComponents2();
+//        initComponents();
     }
 
     /**
@@ -87,7 +88,6 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         jButton20 = new javax.swing.JButton();
         scorePanel = new javax.swing.JPanel();
         scoreText = new javax.swing.JTextField();
-        clothesLevelText = new javax.swing.JTextField();
         playerText = new javax.swing.JTextField();
         player = new javax.swing.JLabel();
         clothesLevel = new javax.swing.JLabel();
@@ -98,12 +98,13 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         jobText = new javax.swing.JTextField();
         experiencesLabel = new javax.swing.JLabel();
         experiencesText = new javax.swing.JTextField();
+        clothesLevelText1 = new javax.swing.JTextField();
         buildingPanel = new javax.swing.JPanel();
         buildingLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jobLabel1 = new javax.swing.JLabel();
+        jobLabel2 = new javax.swing.JLabel();
+        jobLabel3 = new javax.swing.JLabel();
+        jobLabel4 = new javax.swing.JLabel();
         announcementsPanel = new javax.swing.JPanel();
         announcementsLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -111,8 +112,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         aboutPanel = new javax.swing.JPanel();
         gameName = new javax.swing.JLabel();
         endTurnButton = new javax.swing.JButton();
+        weekCounterText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(33, 54, 75));
+        setFocusable(false);
 
         mapPanel.setLayout(new java.awt.GridLayout(5, 5));
 
@@ -186,21 +190,18 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         jButton20.setText("jButton1");
         mapPanel.add(jButton20);
 
+        scoreText.setForeground(new java.awt.Color(102, 153, 79));
         scoreText.setText("jTextField1");
+        scoreText.setCaretColor(new java.awt.Color(102, 153, 179));
         scoreText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 scoreTextActionPerformed(evt);
             }
         });
 
-        clothesLevelText.setText("jTextField2");
-        clothesLevelText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clothesLevelTextActionPerformed(evt);
-            }
-        });
-
+        playerText.setForeground(new java.awt.Color(102, 153, 79));
         playerText.setText("jTextField3");
+        playerText.setCaretColor(new java.awt.Color(102, 153, 179));
 
         player.setText("Player:");
 
@@ -210,15 +211,30 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         possessionsLabel.setText("Possesions:");
 
+        possessionsText.setForeground(new java.awt.Color(102, 153, 79));
         possessionsText.setText("jTextField1");
+        possessionsText.setCaretColor(new java.awt.Color(102, 153, 179));
 
         jobLabel.setText("Job:");
 
+        jobText.setForeground(new java.awt.Color(102, 153, 79));
         jobText.setText("jTextField1");
+        jobText.setCaretColor(new java.awt.Color(102, 153, 179));
 
         experiencesLabel.setText("Experiences:");
 
+        experiencesText.setForeground(new java.awt.Color(102, 153, 79));
         experiencesText.setText("jTextField1");
+        experiencesText.setCaretColor(new java.awt.Color(102, 153, 179));
+
+        clothesLevelText1.setForeground(new java.awt.Color(102, 153, 79));
+        clothesLevelText1.setText("jTextField2");
+        clothesLevelText1.setCaretColor(new java.awt.Color(102, 153, 179));
+        clothesLevelText1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clothesLevelText1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout scorePanelLayout = new javax.swing.GroupLayout(scorePanel);
         scorePanel.setLayout(scorePanelLayout);
@@ -231,16 +247,14 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                         .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(clothesLevel)
                             .addComponent(player))
-                        .addGap(18, 18, 18)
                         .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(scorePanelLayout.createSequentialGroup()
-                                .addComponent(clothesLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(108, 108, 108)
                                 .addComponent(score)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(scoreText))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, scorePanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                                 .addComponent(playerText, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(scorePanelLayout.createSequentialGroup()
                         .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,18 +271,21 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                             .addComponent(experiencesText)
                             .addComponent(possessionsText))))
                 .addContainerGap())
+            .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(scorePanelLayout.createSequentialGroup()
+                    .addGap(110, 110, 110)
+                    .addComponent(clothesLevelText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(610, Short.MAX_VALUE)))
         );
         scorePanelLayout.setVerticalGroup(
             scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(scorePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(scoreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(score))
-                    .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(clothesLevel)
-                        .addComponent(clothesLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(clothesLevel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(player)
@@ -286,17 +303,24 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     .addComponent(experiencesLabel)
                     .addComponent(experiencesText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+            .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(scorePanelLayout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(clothesLevelText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(132, Short.MAX_VALUE)))
         );
+
+        buildingPanel.setForeground(new java.awt.Color(68, 107, 125));
 
         buildingLabel.setText("Building Actions");
 
-        jLabel1.setText("jLabel1");
+        jobLabel1.setText("jLabel1");
 
-        jLabel2.setText("jLabel2");
+        jobLabel2.setText("jLabel2");
 
-        jLabel3.setText("jLabel3");
+        jobLabel3.setText("jLabel3");
 
-        jLabel4.setText("jLabel4");
+        jobLabel4.setText("jLabel4");
 
         javax.swing.GroupLayout buildingPanelLayout = new javax.swing.GroupLayout(buildingPanel);
         buildingPanel.setLayout(buildingPanelLayout);
@@ -305,10 +329,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             .addGroup(buildingPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(jobLabel4)
+                    .addComponent(jobLabel3)
+                    .addComponent(jobLabel1)
+                    .addComponent(jobLabel2)
                     .addComponent(buildingLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -317,20 +341,24 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             .addGroup(buildingPanelLayout.createSequentialGroup()
                 .addComponent(buildingLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(jobLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jobLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(jobLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(jobLabel4)
                 .addGap(0, 215, Short.MAX_VALUE))
         );
+
+        announcementsPanel.setForeground(new java.awt.Color(68, 107, 125));
 
         announcementsLabel.setText("Announcements");
 
         announcementsText.setColumns(20);
+        announcementsText.setForeground(new java.awt.Color(102, 153, 79));
         announcementsText.setRows(5);
+        announcementsText.setCaretColor(new java.awt.Color(102, 153, 179));
         jScrollPane1.setViewportView(announcementsText);
 
         javax.swing.GroupLayout announcementsPanelLayout = new javax.swing.GroupLayout(announcementsPanel);
@@ -356,7 +384,9 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap())
         );
 
-        gameName.setText("Open Jones");
+        aboutPanel.setForeground(new java.awt.Color(68, 107, 125));
+
+        gameName.setText("Open Jones v.a");
 
         endTurnButton.setText("End Turn");
         endTurnButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -396,34 +426,51 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
+        weekCounterText.setForeground(new java.awt.Color(102, 153, 79));
+        weekCounterText.setText("jTextField2");
+        weekCounterText.setCaretColor(new java.awt.Color(102, 153, 179));
+        weekCounterText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                weekCounterTextActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buildingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(scorePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(aboutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(announcementsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buildingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(scorePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(aboutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(announcementsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(337, 337, 337)
+                        .addComponent(weekCounterText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(announcementsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(aboutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(weekCounterText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(buildingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -436,10 +483,6 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private void scoreTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_scoreTextActionPerformed
-
-    private void clothesLevelTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clothesLevelTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clothesLevelTextActionPerformed
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTurnButtonActionPerformed
         // TODO add your handling code here:
@@ -458,6 +501,14 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void clothesLevelText1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clothesLevelText1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clothesLevelText1ActionPerformed
+
+    private void weekCounterTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weekCounterTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_weekCounterTextActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -474,6 +525,18 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
+            javax.swing.UIManager.put("nimbusBase", new Color(33, 54,75));
+            javax.swing.UIManager.put("nimbusBlueGrey", new Color(102,153,179));
+            javax.swing.UIManager.put("control", new Color(68,107,125));
+            javax.swing.UIManager.put("nimbusLightBackground", new Color(0,0,0));
+            javax.swing.UIManager.put("TextArea.foreground", new Color(255,255,255));
+            javax.swing.UIManager.put("TextField.foreground", new Color(255,255,255));
+            javax.swing.UIManager.put("controlText", new Color(0,0,0));
+            javax.swing.UIManager.put("TextArea.font", new Font("Veranda", Font.PLAIN, 15));
+            javax.swing.UIManager.put("TextField.font", new Font("Veranda", Font.PLAIN, 15));
+            javax.swing.UIManager.put("controlText.font", new Font("Veranda", Font.PLAIN, 15));
+            
+            
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -565,7 +628,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         playerText.setText(_game.getCurPlayer().toString());
         scoreText.setText(_game.getCurPlayer().scoresString());
-        clothesLevelText.setText(new Integer(_game.getCurPlayer().getClothesLevel()).toString());
+        weekCounterText.setText(new Integer(_game.getCurPlayer().getClothesLevel()).toString());
         announcementsText.setText(_game.getAllAnnouncements());
 
         //_buildingActionLabels = null;
@@ -642,7 +705,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel buildingLabel;
     private javax.swing.JPanel buildingPanel;
     private javax.swing.JLabel clothesLevel;
-    private javax.swing.JTextField clothesLevelText;
+    private javax.swing.JTextField clothesLevelText1;
     private javax.swing.JButton endTurnButton;
     private javax.swing.JLabel experiencesLabel;
     private javax.swing.JTextField experiencesText;
@@ -667,12 +730,12 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jobLabel;
+    private javax.swing.JLabel jobLabel1;
+    private javax.swing.JLabel jobLabel2;
+    private javax.swing.JLabel jobLabel3;
+    private javax.swing.JLabel jobLabel4;
     private javax.swing.JTextField jobText;
     private javax.swing.JPanel mapPanel;
     private javax.swing.JLabel player;
@@ -682,10 +745,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel score;
     private javax.swing.JPanel scorePanel;
     private javax.swing.JTextField scoreText;
+    private javax.swing.JTextField weekCounterText;
     // End of variables declaration//GEN-END:variables
 
     private void initComponents2() {
-        //
+        // init grid
         Grid grid = _map.getGrid();
         int width = grid.WIDTH;
         int height = grid.HEIGHT;
@@ -697,7 +761,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         _glassPane = new MyGlassPane(this);
         this.setGlassPane(_glassPane);
 
-        //initComponents();
+//        initComponents();
 
         //mapPanel.removeAll();
         mapPanel = new javax.swing.JPanel();
@@ -709,7 +773,9 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         mapPanel.setAlignmentY(0);
         //mapPanel.set
 
-       // mapPanel.setSize(new Dimension( width * 155, height * 96));
+        // mapPanel.setSize(new Dimension( width * 155, height * 96));
+        
+        // draw each tile
         for (int row = 0; row < height; ++row) {
             for (int col = 0; col < width; ++col) {
                 _buttons[row][col] = new javax.swing.JButton();
@@ -756,146 +822,52 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        scorePanel = new javax.swing.JPanel();
         scoreText = new javax.swing.JTextField();
-        clothesLevelText = new javax.swing.JTextField();
-        playerText = new javax.swing.JTextField();
-        player = new javax.swing.JLabel();
-        clothesLevel = new javax.swing.JLabel();
-        score = new javax.swing.JLabel();
-        possessionsLabel = new javax.swing.JLabel();
-        possessionsText = new javax.swing.JTextField();
-        jobLabel = new javax.swing.JLabel();
-        jobText = new javax.swing.JTextField();
-        experiencesLabel = new javax.swing.JLabel();
-        experiencesText = new javax.swing.JTextField();
-        buildingPanel = new javax.swing.JPanel();
-        buildingLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        announcementsPanel = new javax.swing.JPanel();
-        announcementsLabel = new javax.swing.JLabel();
-        endTurnButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        announcementsText = new javax.swing.JTextArea();
+        weekCounterText = new javax.swing.JTextField("Week: -1");
+        possessionsText = new javax.swing.JTextField("possessionsText");
+        experiencesText = new javax.swing.JTextField("experiencesText");
+        jobText = new javax.swing.JTextField("jTextField1");
+        playerText = new javax.swing.JTextField("playerText");
+        
+        player = new javax.swing.JLabel("Player:");
+        score = new javax.swing.JLabel("Score:");
+        jobLabel = new javax.swing.JLabel("Job:");
+        clothesLevel = new javax.swing.JLabel("Clothes Level:");
+        possessionsLabel = new javax.swing.JLabel("Possesions:");
+        experiencesLabel = new javax.swing.JLabel("Experiences:");
+        buildingLabel = new javax.swing.JLabel("Building Actions");
+        
+        /**
+         * We've got to refactor these job action labels!
+         */
+        jobLabel1 = new javax.swing.JLabel("jLabel1");
+        jobLabel2 = new javax.swing.JLabel("jLabel2");
+        jobLabel3 = new javax.swing.JLabel("jLabel3");
+        jobLabel4 = new javax.swing.JLabel("jLabel4");
+        
+        announcementsLabel = new javax.swing.JLabel("Announcements");
+        gameName = new javax.swing.JLabel("Open Jones");
+        
         aboutPanel = new javax.swing.JPanel();
-        gameName = new javax.swing.JLabel();
+        buildingPanel = new javax.swing.JPanel();
+        scorePanel = new javax.swing.JPanel();
+        announcementsPanel = new javax.swing.JPanel();
+        
+        endTurnButton = new javax.swing.JButton("End Turn");
+        announcementsText = new javax.swing.JTextArea("Announcements", 5, 20);
+        jScrollPane1 = new javax.swing.JScrollPane(announcementsText);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        //mapPanel.setLayout(new java.awt.GridLayout(5, 5));
-
-//        jButton1.setText("jButton1");
-//        mapPanel.add(jButton1);
-//
-//        jButton2.setText("jButton1");
-//        mapPanel.add(jButton2);
-//
-//        jButton3.setText("jButton1");
-//        jButton3.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                jButton3ActionPerformed(evt);
-//            }
-//        });
-//        mapPanel.add(jButton3);
-//
-//        jButton4.setText("jButton1");
-//        jButton4.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                jButton4ActionPerformed(evt);
-//            }
-//        });
-//        mapPanel.add(jButton4);
-//
-//        jButton5.setText("jButton1");
-//        mapPanel.add(jButton5);
-//
-//        jButton6.setText("jButton1");
-//        mapPanel.add(jButton6);
-//
-//        jButton10.setText("jButton1");
-//        mapPanel.add(jButton10);
-//
-//        jButton12.setText("jButton1");
-//        mapPanel.add(jButton12);
-//
-//        jButton9.setText("jButton1");
-//        mapPanel.add(jButton9);
-//
-//        jButton8.setText("jButton1");
-//        mapPanel.add(jButton8);
-//
-//        jButton11.setText("jButton1");
-//        mapPanel.add(jButton11);
-//
-//        jButton7.setText("jButton1");
-//        mapPanel.add(jButton7);
-//
-//        jButton13.setText("jButton1");
-//        mapPanel.add(jButton13);
-//
-//        jButton14.setText("jButton1");
-//        mapPanel.add(jButton14);
-//
-//        jButton15.setText("jButton1");
-//        mapPanel.add(jButton15);
-//
-//        jButton16.setText("jButton1");
-//        mapPanel.add(jButton16);
-//
-//        jButton17.setText("jButton1");
-//        mapPanel.add(jButton17);
-//
-//        jButton18.setText("jButton1");
-//        mapPanel.add(jButton18);
-//
-//        jButton19.setText("jButton1");
-//        mapPanel.add(jButton19);
-//
-//        jButton20.setText("jButton1");
-//        mapPanel.add(jButton20);
-//
-//        scoreText.setText("jTextField1");
-//        scoreText.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                scoreTextActionPerformed(evt);
-//            }
-//        });
-//
-//        clothesLevelText.setText("jTextField2");
-//        clothesLevelText.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                clothesLevelTextActionPerformed(evt);
-//            }
-//        });
-//
-//        playerText.setText("jTextField3");
-
-        player.setText("Player:");
-
-        clothesLevel.setText("Clothes Level:");
-
-        score.setText("Score:");
-
-        possessionsLabel.setText("Possesions:");
-
-        possessionsText.setText("jTextField1");
-
-        jobLabel.setText("Job:");
-
-        jobText.setText("jTextField1");
-
-        experiencesLabel.setText("Experiences:");
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-               javax.swing.GroupLayout scorePanelLayout = new javax.swing.GroupLayout(scorePanel);
+    
+    /**
+     * Score panel
+     */
+        javax.swing.GroupLayout scorePanelLayout = new javax.swing.GroupLayout(scorePanel);
         scorePanel.setLayout(scorePanelLayout);
-        scorePanelLayout.setHorizontalGroup(
-            scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        scorePanelLayout.setHorizontalGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(scorePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -906,7 +878,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                         .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(scorePanelLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(clothesLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(weekCounterText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(score)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -930,13 +902,12 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                             .addComponent(experiencesText))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
-        scorePanelLayout.setVerticalGroup(
-            scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        scorePanelLayout.setVerticalGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(scorePanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clothesLevel)
-                    .addComponent(clothesLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(weekCounterText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(scoreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(score)))
@@ -958,51 +929,34 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     .addComponent(experiencesText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
-        buildingLabel.setText("Building Actions");
-
-        jLabel1.setText("jLabel1");
-
-        jLabel2.setText("jLabel2");
-
-        jLabel3.setText("jLabel3");
-
-        jLabel4.setText("jLabel4");
-
+        
+        
         javax.swing.GroupLayout buildingPanelLayout = new javax.swing.GroupLayout(buildingPanel);
         buildingPanel.setLayout(buildingPanelLayout);
-        buildingPanelLayout.setHorizontalGroup(
-            buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        buildingPanelLayout.setHorizontalGroup(buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buildingPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(jobLabel4)
+                    .addComponent(jobLabel3)
+                    .addComponent(jobLabel1)
+                    .addComponent(jobLabel2)
                     .addComponent(buildingLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        buildingPanelLayout.setVerticalGroup(
-            buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        buildingPanelLayout.setVerticalGroup(buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buildingPanelLayout.createSequentialGroup()
                 .addComponent(buildingLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(jobLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jobLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(jobLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(jobLabel4)
                 .addGap(0, 316, Short.MAX_VALUE))
         );
-
-        announcementsLabel.setText("Announcements");
-
-        announcementsText.setColumns(20);
-        announcementsText.setRows(5);
-        jScrollPane1.setViewportView(announcementsText);
 
         javax.swing.GroupLayout announcementsPanelLayout = new javax.swing.GroupLayout(announcementsPanel);
         announcementsPanel.setLayout(announcementsPanelLayout);
@@ -1025,11 +979,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-        );
-
-        gameName.setText("Open Jones");
-
-        endTurnButton.setText("End Turn");
+        )
+                ;
         endTurnButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 endTurnButtonMouseClicked(evt);

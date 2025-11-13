@@ -32,7 +32,7 @@ class EmploymentAgency extends Building {
             GenericTreeNode<Action> root = actionsTree.getRoot();
             for (Building b : _map.getBuildings()) {
                 ArrayList<Job> jobs = b.getJobs();
-                if (!jobs.isEmpty()) {
+                 if (!jobs.isEmpty()) {
                     GenericTreeNode<Action> buildingNode = new GenericTreeNode<>(null);
                     Action getBuildingJobsList = new SubMenuAction(0, b.getClass().getSimpleName(), buildingNode, this);
                     buildingNode.setData(getBuildingJobsList);
@@ -44,7 +44,7 @@ class EmploymentAgency extends Building {
                     //buildingNode.addChild(mainmenuNode);
                                          
                     for (Job j: jobs) {
-                        Action apply = new ApplyForJobAction(j);
+                        Action apply = new ApplyForJobAction(j, player);
                         GenericTreeNode<Action> jobNode = new GenericTreeNode<>(apply);
                         buildingNode.addChild(jobNode);
                     }

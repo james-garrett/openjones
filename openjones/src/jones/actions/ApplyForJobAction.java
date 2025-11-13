@@ -43,7 +43,7 @@ public class ApplyForJobAction extends Action {
     
     private final Job _job;
     
-    public ApplyForJobAction (Job job) {
+    public ApplyForJobAction (Job job, PlayerState player) {
         _job = job;
     }
 
