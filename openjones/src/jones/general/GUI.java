@@ -7,9 +7,7 @@ package jones.general;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -33,27 +31,31 @@ import jones.map.MapManager;
 public class GUI extends javax.swing.JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-    protected MapManager _map;
-    protected Game _game;
-    protected final Image _jonesImg;
-    protected int _lastSelectedBuildingActionIndex;
-    private ArrayList<Action> _possibletActions;
-    private GUIGraphics _guiGraphics;
-    private MyGlassPane _glassPane;
+    protected MapManager map;
+    protected Game game;
+
+    /**
+     *
+     */
+    protected final ImageIcon jonesImg;
+    protected int lastSelectedBuildingActionIndex;
+    private ArrayList<Action> possibletActions;
+    private MyGlassPane glassPane;
     private static final int TILE_WIDTH = 155;
     private static final int TILE_HIGHT = 96;
 
     /**
      * Creates new form GUI
+     * @param game
      */
     public GUI(Game game) {
-        _map = game.getMap();
-        _game = game;
+        map = game.getMap();
+        this.game = game;
         ImageIcon img = new ImageIcon("./images/jones.png");
-        _jonesImg = img.getImage().getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
-        _possibletActions = null;
+        jonesImg = new ImageIcon(img.getImage().getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH));
+        
+        possibletActions = null;
         initComponents2();
-//        initComponents();
     }
 
     /**
@@ -489,7 +491,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     private void endTurnButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_endTurnButtonMouseClicked
-        _game.endTurn();
+        game.endTurn();
         repaint();
     }//GEN-LAST:event_endTurnButtonMouseClicked
 
@@ -543,40 +545,32 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
-        //jButton21.set
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GUI gui = new GUI(g);
-                gui.setLocationRelativeTo(null);
-                gui.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            GUI gui = new GUI(g);
+            gui.setLocationRelativeTo(null);
+            gui.setVisible(true);
         });
     }
 
     @Override
     public void paint(Graphics g) {
-        PlayerPosition pos = _game.getCurPlayer().getPos();
+        PlayerPosition pos = game.getCurPlayer().getPos();
         int x = _buttons[pos.getY()][pos.getX()].getX();
         int y = _buttons[pos.getY()][pos.getX()].getY();
 
-        _glassPane.setPoint(new Point ( x + TILE_WIDTH/2,  y + (int) (2.25*TILE_HIGHT) ));
-        this.setGlassPane(_glassPane);
-        _glassPane.setVisible(true);
-        _glassPane.repaint();
+        glassPane.setPoint(new Point ( x + TILE_WIDTH/2,  y + (int) (2.25*TILE_HIGHT) ));
+        this.setGlassPane(glassPane);
+        glassPane.setVisible(true);
+        glassPane.repaint();
         super.paint(g);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -615,38 +609,35 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         vertSequentialGroup.addComponent(buildingLabel);
 
 
-        Graphics2D g2d = (Graphics2D) g;
-        //g2d.drawImage(bg, 0, 0, null);
-        PlayerPosition curPos = _game.getCurPlayer().getPos();
-        javax.swing.JButton butt = _buttons[curPos.getY()][curPos.getX()];
+//        Graphics2D g2d = (Graphics2D) g;
+//        TODO - where do we draw this?
+//        g2d.drawImage(_jonesImg, 30, 30, null);
+        
+        PlayerPosition curPos = game.getCurPlayer().getPos();
+//        javax.swing.JButton butt = _buttons[curPos.getY()][curPos.getX()];
 
-        Location tile = (Location) _game.getMap().getGrid().get(curPos);
-        //butt.setText(convertToMultiline(tile.toString() + "\n\n" + curPos));
-//        int x = (int) (0.5 * (butt.getX() + butt.getWidth()));
-//        int y = (int) (0.5 * (butt.getY() + butt.getHeight()));
-//        g2d.drawImage(_jonesImg, x, y, null);
+//        Location tile = (Location) _game.getMap().getGrid().get(curPos);
 
-        playerText.setText(_game.getCurPlayer().toString());
-        scoreText.setText(_game.getCurPlayer().scoresString());
-        weekCounterText.setText(new Integer(_game.getCurPlayer().getClothesLevel()).toString());
-        announcementsText.setText(_game.getAllAnnouncements());
+        playerText.setText(game.getCurPlayer().toString());
+        scoreText.setText(game.getCurPlayer().scoresString());
+        weekCounterText.setText(Integer.toString(game.getCurPlayer().getClothesLevel()));
+        announcementsText.setText(game.getAllAnnouncements());
 
-        //_buildingActionLabels = null;
 
         //populate building panel
         if (curPos.isInBuilding()) {
-            _possibletActions = _game.getPossibletActions();
+            possibletActions = game.getPossibletActions();
             //_buildingActionLabels = new JLabel
             int actionID = 0;
-            for (Action a : _possibletActions) {
+            for (Action a : possibletActions) {
                 javax.swing.JLabel label = new javax.swing.JLabel();
                 if (null != a) {
                     label.setText(a.toString());
                     label.setForeground(Color.blue);
-                    if (_lastSelectedBuildingActionIndex == actionID) {
+                    if (lastSelectedBuildingActionIndex == actionID) {
                         label.setForeground(Color.YELLOW);
                     }
-                    BuildingActionListener listener = new BuildingActionListener(_game, this, actionID, label, a);
+                    BuildingActionListener listener = new BuildingActionListener(game, this, actionID, label, a);
                     label.addMouseListener(listener);
                 } else {
                     label.setText("N\\A");
@@ -663,26 +654,26 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
             vertSequentialGroup.addGap(0, 316, Short.MAX_VALUE);
 
         } else {
-            _lastSelectedBuildingActionIndex = -1;
+            lastSelectedBuildingActionIndex = -1;
         }
 
 
 
-        possessionsText.setText(_game.getCurPlayer().getPossessions().toString());
-        jobText.setText(_game.getCurPlayer().getJob().toString());
-        experiencesText.setText(_game.getCurPlayer().getExperiences().toString());
+        possessionsText.setText(game.getCurPlayer().getPossessions().toString());
+        jobText.setText(game.getCurPlayer().getJob().toString());
+        experiencesText.setText(game.getCurPlayer().getExperiences().toString());
     }
 
     public ArrayList<Action> getPossibletActions() {
-        return _possibletActions;
+        return possibletActions;
     }
 
     public int getLastSelectedBuildingActionIndex() {
-        return _lastSelectedBuildingActionIndex;
+        return lastSelectedBuildingActionIndex;
     }
 
     public void setLastSelectedBuildingActionIndex(int _lastSelectedBuildingActionIndex) {
-        this._lastSelectedBuildingActionIndex = _lastSelectedBuildingActionIndex;
+        this.lastSelectedBuildingActionIndex = _lastSelectedBuildingActionIndex;
     }
 
     @Override
@@ -694,9 +685,11 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     public static String convertToMultiline(String orig) {
 
-        return "<html>" + orig.replaceAll("\n", "<br>");
+        return String.format("<html>%s", orig.replace("\\n", "<br>"));
 
     }
+    
+    // Why can't we modify this?
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aboutPanel;
     private javax.swing.JLabel announcementsLabel;
@@ -750,62 +743,51 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     private void initComponents2() {
         // init grid
-        Grid grid = _map.getGrid();
+        Grid grid = map.getGrid();
         int width = grid.WIDTH;
         int height = grid.HEIGHT;
         Position pos = new Position(0, 0);
-        _guiGraphics = new GUIGraphics();
+        GUIGraphics guiGraphics = new GUIGraphics();
 
         _buttons = new JButton[height][width];
         Location tile;
-        _glassPane = new MyGlassPane(this);
-        this.setGlassPane(_glassPane);
+        glassPane = new MyGlassPane(this);
+        this.setGlassPane(glassPane);
 
-//        initComponents();
-
-        //mapPanel.removeAll();
         mapPanel = new javax.swing.JPanel();
-        GridLayout gridLayout = new java.awt.GridLayout(height, width);
-        gridLayout.setHgap(0);
-        gridLayout.setVgap(0);
+        GridLayout gridLayout = new java.awt.GridLayout(height, width, 0, 0);
         mapPanel.setLayout(gridLayout);
         mapPanel.setAlignmentX(0);
         mapPanel.setAlignmentY(0);
         //mapPanel.set
 
-        // mapPanel.setSize(new Dimension( width * 155, height * 96));
         
         // draw each tile
         for (int row = 0; row < height; ++row) {
             for (int col = 0; col < width; ++col) {
                 _buttons[row][col] = new javax.swing.JButton();
-                //_buttons[row][col].setBorder(BorderFactory.createEmptyBorder());
-                 //_buttons[row][col].setContentAreaFilled(false);
                  _buttons[row][col].setBorder(null);
                  _buttons[row][col].setBorderPainted(false);
                  _buttons[row][col].setOpaque(true);
                  _buttons[row][col].setMargin(new Insets(0, 0, 0, 0));
-                // _buttons[row][col].setSize(new Dimension(  155,  96));
                 mapPanel.add(_buttons[row][col]);
 
                 pos.setXY(col, row);
                 tile = (Location) grid.get(pos);
-                // _buttons[row][col].setText(tile.toString());
                 Icon tileIcon = null;
                 try {
                     String name = tile.getName();
-                    tileIcon = _guiGraphics.getTileIcon(name);
+                    tileIcon = guiGraphics.getTileIcon(name);
                     if (null != tileIcon) {
                         _buttons[row][col].setIcon(tileIcon);
                     }
-                    //_buttons[row][col].setIcon(new SVGIcon("/home/dimid/NetBeansProjects/openjones/openjones/images/Gerald_G_Small_House.svg",_buttons[row][col].getWidth() , _buttons[row][col].getHeight()));
                 } catch (Exception ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
 
                 if (tile.isEnterable()) {
-                    java.awt.event.MouseAdapter listener = new BuildingListener(col, row, _game, this);
+                    java.awt.event.MouseAdapter listener = new BuildingListener(col, row, game, this);
                     _buttons[row][col].addMouseListener(listener);
                 } else {
                     if (null == tileIcon)
@@ -858,10 +840,12 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         jScrollPane1 = new javax.swing.JScrollPane(announcementsText);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        drawPanels();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+}
+
+    private void drawPanels() {
     /**
      * Score panel
      */
@@ -986,10 +970,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                 endTurnButtonMouseClicked(evt);
             }
         });
-        endTurnButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endTurnButtonActionPerformed(evt);
-            }
+        endTurnButton.addActionListener((java.awt.event.ActionEvent evt) -> {
+            endTurnButtonActionPerformed(evt);
         });
 
         javax.swing.GroupLayout aboutPanelLayout = new javax.swing.GroupLayout(aboutPanel);
@@ -1055,15 +1037,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         );
 
         pack();
-
-
-
-
-
     }
 
     public MyGlassPane getGlassPane() {
-        return _glassPane;
+        return glassPane;
     }
 
     javax.swing.JButton[][] getButtons() {

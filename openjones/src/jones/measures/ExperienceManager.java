@@ -7,13 +7,12 @@ package jones.measures;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
-import jones.general.Player;
 import jones.general.PlayerState;
 
 /**
  * Experience is measured in Experience Units (EXPU). The experience model consists of a set of experiences at different jobs.
  * For each rank we sum the experience gained working in all the jobs of this rank.
- * The higher the rank, more experience can be gained. The time it takes to aquire an EXPU, depends on the specific job.
+ * The higher the rank, more experience can be gained. The time it takes to acquire an EXPU, depends on the specific job.
  * e.g. Working 10 Time Units (TIMU), as a manager in a factory would yield 2 EXPUs,
  * while Working 10 Time Units (TIMU), as a manager in a fast-food restaurant would yield only 1 EXPU.
  * This rate is defined by the Job field EXPERIENCE_UNITS_PER_1_TIME_UNIT_OF_WORK.
@@ -32,7 +31,7 @@ public class ExperienceManager {
         _exps = new HashMap<>();
         Set<Entry<Integer, Experience>> othersEntries = other._exps.entrySet();    
         for (Entry<Integer, Experience> e : othersEntries) {
-            Integer rank = new Integer(e.getKey());
+            Integer rank = e.getKey();
             Experience xp = new Experience(e.getValue());
             _exps.put(rank, xp);
         }

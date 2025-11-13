@@ -1,0 +1,2 @@
+external.AStarPos
+external.FScoreNode

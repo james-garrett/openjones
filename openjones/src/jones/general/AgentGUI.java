@@ -443,11 +443,8 @@ public class AgentGUI extends GUI  {
         //jButton21.set
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GUI(g).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUI(g).setVisible(true);
         });
     }
 
@@ -493,25 +490,25 @@ public class AgentGUI extends GUI  {
 
         Graphics2D g2d = (Graphics2D) g;
         //g2d.drawImage(bg, 0, 0, null);
-        PlayerPosition curPos = _game.getCurPlayer().getPos();
+        PlayerPosition curPos = game.getCurPlayer().getPos();
         javax.swing.JButton butt = _buttons[curPos.getY()][curPos.getX()];
 
-        Location tile = (Location) _game.getMap().getGrid().get(curPos);
+        Location tile = (Location) game.getMap().getGrid().get(curPos);
         butt.setText(convertToMultiline(tile.toString() + "\n\n" + curPos));
 //        int x = (int) (0.5 * (butt.getX() + butt.getWidth()));
 //        int y = (int) (0.5 * (butt.getY() + butt.getHeight()));
 //        g2d.drawImage(_jonesImg, x, y, null);
 
-        playerText.setText(_game.getCurPlayer().toString());
-        scoreText.setText(_game.getCurPlayer().scoresString());
-        clothesLevelText.setText(new Integer(_game.getCurPlayer().getClothesLevel()).toString());
-        announcementsText.setText(_game.getAllAnnouncements());
+        playerText.setText(game.getCurPlayer().toString());
+        scoreText.setText(game.getCurPlayer().scoresString());
+        clothesLevelText.setText(Integer.toString(game.getCurPlayer().getClothesLevel()));
+        announcementsText.setText(game.getAllAnnouncements());
 
         //_buildingActionLabels = null;
         
         //populate building panel
         if (curPos.isInBuilding()) {           
-            ArrayList<? extends Action> possibletActions = _game.getPossibletActions();
+            ArrayList<? extends Action> possibletActions = game.getPossibletActions();
             //_buildingActionLabels = new JLabel
             int actionID = 0;
             for (Action a : possibletActions) {
@@ -519,7 +516,7 @@ public class AgentGUI extends GUI  {
                 if (null != a) {
                     label.setText(a.toString());
                     label.setForeground(Color.blue);
-                    if (_lastSelectedBuildingActionIndex == actionID) {
+                    if (lastSelectedBuildingActionIndex == actionID) {
                         label.setForeground(Color.YELLOW);
                     }
                     //BuildingActionListener listener = new BuildingActionListener(_game, this, actionID, label, a);
@@ -540,22 +537,22 @@ public class AgentGUI extends GUI  {
 
         }
         else {
-            _lastSelectedBuildingActionIndex = -1;
+            lastSelectedBuildingActionIndex = -1;
         }
         
         
 
-        possessionsText.setText(_game.getCurPlayer().getPossessions().toString());
-        jobText.setText(_game.getCurPlayer().getJob().toString());
-        experiencesText.setText(_game.getCurPlayer().getExperiences().toString());
+        possessionsText.setText(game.getCurPlayer().getPossessions().toString());
+        jobText.setText(game.getCurPlayer().getJob().toString());
+        experiencesText.setText(game.getCurPlayer().getExperiences().toString());
     }
 
     public int getLastSelectedBuildingActionIndex() {
-        return _lastSelectedBuildingActionIndex;
+        return lastSelectedBuildingActionIndex;
     }
 
     public void setLastSelectedBuildingActionIndex(int _lastSelectedBuildingActionIndex) {
-        this._lastSelectedBuildingActionIndex = _lastSelectedBuildingActionIndex;
+        this.lastSelectedBuildingActionIndex = _lastSelectedBuildingActionIndex;
     }
 
     @Override
@@ -622,7 +619,7 @@ public class AgentGUI extends GUI  {
 
     private void initComponents2() {
         //
-        Grid grid = _map.getGrid();
+        Grid grid = map.getGrid();
         int width = grid.WIDTH;
         int height = grid.HEIGHT;
         Position pos = new Position(0, 0);
