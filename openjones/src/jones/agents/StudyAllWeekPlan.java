@@ -6,7 +6,6 @@ package jones.agents;
 
 import jones.actions.StudyAction;
 import jones.general.Game;
-import jones.general.Player;
 import jones.general.PlayerPosition;
 
 /**
@@ -21,9 +20,7 @@ public class StudyAllWeekPlan extends WeekPlan {
     }
 
     @Override
-    public void build() {
-                
-        Player player = _agent.getPlayer();
+    public final void build() {
         Game game = _agent.getGame();
         
         PlayerPosition college = new PlayerPosition(game.getMap().getBuildingPositionByName("HI-TECH U"), true);
@@ -39,7 +36,7 @@ public class StudyAllWeekPlan extends WeekPlan {
     }
     
 //    
-//       
+//    TODO: See if this needs to be restored
 //    public static Plan studyAllWeek(Agent agent) {
 //        Player player = agent.getPlayer();
 //        Game game = agent.getGame();

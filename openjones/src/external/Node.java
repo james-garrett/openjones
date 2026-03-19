@@ -1,6 +1,7 @@
 package external;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Nodes in the Graph that represents the Sokoban map
@@ -27,6 +28,8 @@ public class Node {
 
 	/**
 	 * simple function to print List of Nodes as simple to read printout
+     * @param list
+     * @return 
 	 */
 	public static String printNodeList(List<Node> list) {
 		String s = "";
@@ -46,4 +49,11 @@ public class Node {
 		}
 		return super.equals(obj);
 	}
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 79 * hash + Objects.hashCode(this.p);
+            return hash;
+        }
 }

@@ -4,7 +4,6 @@
  */
 package jones.actions;
 
-import jones.general.Player;
 import jones.general.PlayerPosition;
 import jones.general.PlayerState;
 import jones.general.Position;
@@ -35,32 +34,21 @@ public class ExitBuildingMovement extends Movement{
         if (!this._oldPos.equals( other._oldPos)) {
             return false;
         }
-        if (!this._newPos.equals( other._newPos)) {
-            return false;
-        }
-
-        
-        return true;
+        return this._newPos.equals( other._newPos);
     }
     /**
      * The time it takes to exit a building
      */
-    public static final int EXIT_BUILDING_DURATION = 0;
-    
-      
-    private Building _build;
-    
+    public static final int EXIT_BUILDING_DURATION = 0;    
     
     public ExitBuildingMovement (PlayerPosition oldpos, Building build) {
         super(new PlayerPosition(oldpos), new PlayerPosition(oldpos));
         _newPos.exitBuilding();
-        _build = build;
     }
  
     public ExitBuildingMovement (Position oldpos, Building build) {
 //        this(new PlayerPosition(oldpos,true), build);
         super(new PlayerPosition(oldpos,true), new PlayerPosition(oldpos,false));     
-        _build = build;
     }
    
     @Override
@@ -73,8 +61,7 @@ public class ExitBuildingMovement extends Movement{
     @Override
     protected void doAction(PlayerState playerState) {
         playerState.setPos(getNewPos());
-        //_build.prepareForPlayerExit();
-         playerState.setActionsTree(null);
+        playerState.setActionsTree(null);
         playerState.affectTime(EXIT_BUILDING_DURATION);
         
     }

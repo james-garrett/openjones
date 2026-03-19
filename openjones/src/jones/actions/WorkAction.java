@@ -6,7 +6,6 @@ package jones.actions;
 
 import jones.measures.Career;
 import jones.jobs.Job;
-import jones.general.Player;
 import jones.general.PlayerState;
 
 /**
@@ -130,6 +129,7 @@ public class WorkAction extends Action {
      * If the debt is large enough garnish GARNISH_PERCENTAGE percent
      * Otherwise,subtract the debt 
      * @param baseWage
+     * @param debt
      * @return 
      */
     public int garnish(int baseWage, int debt) {                 

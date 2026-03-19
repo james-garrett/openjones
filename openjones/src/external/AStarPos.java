@@ -21,6 +21,10 @@ public class AStarPos {
     /**
      * Our own implementation of the A-Star algorithm, for use with our Node
      * class and custom heuristic function.
+     * @param start
+     * @param goal
+     * @param _map
+     * @return 
      */
     static public ArrayList<Position> findPath(Position start, Position goal, MapManager _map) {
         // create all needed maps
@@ -64,8 +68,6 @@ public class AStarPos {
             // not done yet -> check out the neighbors that we can reach and did
             // not check yet
 
-
-
             for (Position neighbor : Route.getNeigbours(current, _map)) {
                 if (closedMap.containsKey(neighbor)) {
                     continue;
@@ -85,12 +87,9 @@ public class AStarPos {
                 if (!openQueue.contains(new FScoreNode(0, neighbor))) {
                     neighborNotInQueue = true;
                     tempScoreBetter = true;
-                } else if (tempGScore < g) {
-                    tempScoreBetter = true;
                 } else {
-                    tempScoreBetter = false;
-
-                }
+                    tempScoreBetter = tempGScore < g;
+                } 
 
                 if (tempScoreBetter) {
                     predMap.put(neighbor, current);
@@ -171,17 +170,12 @@ class FScoreNode implements Comparable<FScoreNode> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+
         final FScoreNode other = (FScoreNode) obj;
-        if (!pos.equals(other.pos)) {
-            return false;
-        }
-        return true;
+        return pos.equals(other.pos);
     }
 }
 

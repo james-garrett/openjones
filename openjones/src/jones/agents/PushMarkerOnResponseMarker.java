@@ -5,7 +5,6 @@
 package jones.agents;
 
 import jones.actions.Action;
-import jones.actions.WorkAction;
 import jones.general.PlayerState;
 
 /**

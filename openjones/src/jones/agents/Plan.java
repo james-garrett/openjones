@@ -7,24 +7,12 @@ package jones.agents;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import jones.actions.Action;
 import jones.actions.ActionResponse;
-import jones.actions.Movement;
-import jones.actions.StudyAction;
-import jones.actions.SubMenuAction;
-import jones.actions.WorkAction;
-import jones.general.AbstractPlayer;
-import jones.general.AbstractPlayerState;
-import jones.general.Game;
 import jones.general.Player;
-import jones.general.PlayerPosition;
 import jones.general.PlayerState;
-import jones.general.Position;
-import jones.general.Route;
 import jones.jobs.Job;
-import jones.map.Building;
 import jones.map.House;
 
 /**
@@ -98,10 +86,7 @@ public abstract class Plan {
             return false;
         }
         
-        if (_type != other._type)
-            return false;
-                
-        return true;
+        return _type == other._type;
     }
 
     
@@ -214,14 +199,7 @@ public abstract class Plan {
     public boolean isEmpty() {
         return _actions.isEmpty();
     }
-     
-   
     
-    
-     
-    
-
-
     public LinkedList<PlanMarker> getActions() {
         return _actions;
     }

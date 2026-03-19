@@ -27,6 +27,12 @@ public class AStarPlayer {
     /**
      * Our own implementation of the A-Star algorithm, for use with our Node
      * class and custom heuristic function.
+     * @param start
+     * @param goal
+     * @param agent
+     * @param isOnDemand
+     * @param map
+     * @return 
      */
     static public List<PlanType> findPlan(PlayerState start, int goal, PlannerAgent agent, MapManager map, boolean isOnDemand) {
         Map<PlayerState, Object> closedMap = new HashMap<>();

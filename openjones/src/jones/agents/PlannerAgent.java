@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jones.actions.Action;
 import jones.actions.ActionResponse;
-import jones.actions.ExitBuildingMovement;
 import jones.general.Game;
 import jones.general.Player;
 import jones.general.PlayerState;
@@ -107,7 +106,7 @@ public class PlannerAgent extends Agent {
     
     protected boolean  hasNextActionInSchedule() {
                 
-        while (_schedule.size() > 0) {
+        while (!_schedule.isEmpty()) {
             if (getCurPlan().size() > 0) {
                 return true;
             } else {
@@ -128,6 +127,7 @@ public class PlannerAgent extends Agent {
         /**
      * Return a list of all plans. 
      *
+     * @param playerState
      * @return
      */
     public List<Plan> getPlans(PlayerState playerState) {
@@ -146,6 +146,7 @@ public class PlannerAgent extends Agent {
      * Return a list of needed (by score) plans. E.g. if Happiness is too low,
      * the result would include a ResTAllWeekPlan
      *
+     * @param playerState
      * @return
      */
     public List<Plan> getNeededPlans(PlayerState playerState) {
@@ -231,6 +232,7 @@ public class PlannerAgent extends Agent {
     /**
      * Return all possible PlanScores
      *
+     * @param playerState
      * @return
      */
     protected List<PlanScore> getPlanScores(PlayerState playerState) {
@@ -253,6 +255,7 @@ public class PlannerAgent extends Agent {
      * Return a list of needed (by score) PlanScores. E.g. if Happiness is too
      * low, the result would include a ResTAllWeekPlan
      *
+     * @param playerState
      * @return
      */
     protected List<PlanScore> getNeededPlanScores(PlayerState playerState) {

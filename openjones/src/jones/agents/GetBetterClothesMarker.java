@@ -12,11 +12,11 @@ import jones.general.PlayerState;
  * @author dimid <dimidd@gmail.com>
  */
 class GetBetterClothesMarker  extends PlanMarker{
-    private final PlayerState _playerState;
+//    private final PlayerState _playerState;
 
     public GetBetterClothesMarker(Plan plan, Action action, PlayerState playerState) {
         super(plan, action);
-        _playerState = playerState;
+//        _playerState = playerState;
     }
 
     @Override

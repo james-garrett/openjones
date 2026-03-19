@@ -4,14 +4,8 @@
  */
 package jones.agents;
 
-import java.util.ArrayList;
-import java.util.List;
-import jones.actions.Action;
-import jones.actions.SubMenuAction;
 import jones.general.Game;
-import jones.general.Player;
 import jones.general.PlayerPosition;
-import jones.general.PlayerState;
 import jones.general.Position;
 import jones.map.Building;
 
@@ -28,7 +22,7 @@ class GetABetterJobPlan extends AllOrNothingPlan {
         build();
     }
   
-        
+    // TODO restore functionality here
     /**
      * Get a job better (i.e. higher paying) than the current job
      * @param agent
@@ -64,7 +58,7 @@ class GetABetterJobPlan extends AllOrNothingPlan {
 //    }
 
     @Override
-    public void build() {
+    public final void build() {
                
         Game game = _agent.getGame();
         //Player player = _agent.getPlayer();

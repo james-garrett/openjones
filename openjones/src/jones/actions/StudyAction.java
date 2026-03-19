@@ -4,7 +4,6 @@
  */
 package jones.actions;
 
-import jones.general.Player;
 import jones.general.PlayerState;
 
 /**

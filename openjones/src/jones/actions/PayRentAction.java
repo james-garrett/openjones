@@ -6,7 +6,6 @@ package jones.actions;
 
 import static jones.actions.RentHouseAction.calculateNewRentDebt;
 import jones.possessions.RentPossession;
-import jones.general.Player;
 import jones.general.PlayerState;
 
 /**

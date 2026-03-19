@@ -20,7 +20,7 @@ public class WorkAllWeekPlan extends WeekPlan {
     }
 
     @Override
-    public void build() {
+    public final void build() {
                 
          _actions.add( new GoToWorkMarker(this, null));
         

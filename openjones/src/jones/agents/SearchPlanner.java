@@ -27,7 +27,7 @@ public class SearchPlanner extends PlannerAgent {
 
     @Override
     public boolean hasNextAction() {
-        while (_schedule.size() > 0) {
+        while (!_schedule.isEmpty()) {
             if (getCurPlan().size() > 0) {
                 return true;
             } else {
@@ -36,6 +36,7 @@ public class SearchPlanner extends PlannerAgent {
         }
 
         List<Plan.PlanType> foundPlansTypes = AStarPlayer.findPlan(_player.getState(), Goals.MAX_TOTAL_SCORE, this, _game.getMap(), false);
+        // TODO: this is a duplicate code chunk as SearchOnDemandPlanner.hasNextAction. We could simplify both blocks
         for (Plan.PlanType type : foundPlansTypes) {
             Plan plan = createPlanFromType(type);
             if (plan == null) {

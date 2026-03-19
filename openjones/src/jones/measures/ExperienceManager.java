@@ -7,7 +7,6 @@ package jones.measures;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
-import jones.general.Player;
 import jones.general.PlayerState;
 
 /**
@@ -21,7 +20,7 @@ import jones.general.PlayerState;
  * @author dimid
  */
 public class ExperienceManager {
-    private HashMap<Integer, Experience> _exps;
+    private final HashMap<Integer, Experience> _exps;
     private static final int CAP_PER_RANK = 100;
     
     public ExperienceManager () {
@@ -32,7 +31,7 @@ public class ExperienceManager {
         _exps = new HashMap<>();
         Set<Entry<Integer, Experience>> othersEntries = other._exps.entrySet();    
         for (Entry<Integer, Experience> e : othersEntries) {
-            Integer rank = new Integer(e.getKey());
+            Integer rank = e.getKey();
             Experience xp = new Experience(e.getValue());
             _exps.put(rank, xp);
         }
@@ -65,10 +64,12 @@ public class ExperienceManager {
      * Add a new experience
      * @param rank
      * @param cap
+     * @param weeks
      * @return the new experience 
      */
     public Experience addExperience (int rank, int cap, int weeks) {
-        return _exps.put(rank, new Experience(weeks,cap));
+         Experience exp = _exps.put(rank, new Experience(weeks,cap));
+         return exp;
     }
      
     /**

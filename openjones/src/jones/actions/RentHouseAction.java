@@ -4,10 +4,8 @@
  */
 package jones.actions;
 
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.map.House;
-import jones.possessions.Possession;
 import jones.possessions.PossessionManager;
 import jones.possessions.RentContract;
 import jones.possessions.RentPossession;

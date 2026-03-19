@@ -33,10 +33,8 @@ public class PlanScore implements Comparable<PlanScore>{
         if (!this._plan.equals(other._plan)) {
             return false;
         }
-        if (this._score != other._score) {
-            return false;
-        }
-        return true;
+      
+        return this._score == other._score;
     }
     
     protected Plan _plan;

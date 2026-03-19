@@ -5,7 +5,6 @@
 package jones.agents;
 
 import jones.actions.Action;
-import jones.general.Player;
 import jones.general.PlayerPosition;
 import jones.general.PlayerState;
 import jones.jobs.Job;

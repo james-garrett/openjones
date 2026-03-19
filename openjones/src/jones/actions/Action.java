@@ -3,10 +3,7 @@
  * and open the template in the editor.
  */
 package jones.actions;
-
-import jones.general.Player;
 import jones.general.PlayerState;
-import jones.map.MapManager;
 
 /**
  *
@@ -22,9 +19,9 @@ public abstract class Action {
 
     /**
      * If possible, performs the action.
-     * Otherwise, returns an explanation why it can't be performed 
-     * @param player
-     * @return Returns null iff the action performed.
+     * Otherwise, returns an explanation why it can't be performed
+     * @param playerState
+     * @return Returns null if the action performed.
      *          otherwise returns a String with an explanation
      */
     public final ActionResponse perform(PlayerState playerState) {
@@ -77,11 +74,11 @@ public abstract class Action {
     public abstract boolean isSubmenu();
 
     /**
-     * Return the max period a player has upto a limit.
+     * Return the max period a player has up to a limit.
      * @param limit The max period
-     * @param player
-     * @return Iff the player, doesn't have time at all, return Integer.MAX_VALUE.
-     *          Otherwise, return the max period the player has upto a limit
+     * @param playerState
+     * @return If the player, doesn't have time at all, return Integer.MAX_VALUE.
+     *          Otherwise, return the max period the player has up to a limit
      *
      */
     protected int getAvailiableTimeUpto(int limit, PlayerState playerState) {
@@ -109,14 +106,8 @@ public abstract class Action {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Action other = (Action) obj;
-        return true;
+        boolean equals = (obj != null && getClass() == obj.getClass());
+        return equals;
     }
     
     

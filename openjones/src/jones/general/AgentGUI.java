@@ -504,7 +504,7 @@ public class AgentGUI extends GUI  {
 
         playerText.setText(_game.getCurPlayer().toString());
         scoreText.setText(_game.getCurPlayer().scoresString());
-        clothesLevelText.setText(new Integer(_game.getCurPlayer().getClothesLevel()).toString());
+        clothesLevelText.setText(Integer.toString(_game.getCurPlayer().getClothesLevel()));
         announcementsText.setText(_game.getAllAnnouncements());
 
         //_buildingActionLabels = null;

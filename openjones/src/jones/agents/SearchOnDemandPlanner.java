@@ -24,7 +24,7 @@ public class SearchOnDemandPlanner extends SearchPlanner {
        
     @Override
     public boolean hasNextAction() {
-      while (_schedule.size() > 0) {
+      while (!_schedule.isEmpty()) {
           if (getCurPlan().size() > 0) {
               return true;
           }

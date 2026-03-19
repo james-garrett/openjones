@@ -4,8 +4,6 @@
  */
 package jones.actions;
 
-import java.util.Objects;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.possessions.Possession;
 
@@ -39,10 +37,7 @@ public abstract class PurchaseAction extends Action {
             return false;
         }
         final PurchaseAction other = (PurchaseAction) obj;
-        if (!this._possession.equals(other._possession)) {
-            return false;
-        }
-        return true;
+        return this._possession.equals(other._possession);
     }
 
     static ActionResponse checkCash(PlayerState player, int cashEffect) {
@@ -78,11 +73,6 @@ public abstract class PurchaseAction extends Action {
 
     @Override
     public abstract int happinessEffect(PlayerState player);
-
-//    @Override
-//    public int WealthEffect(PlayerState player) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
 
     @Override
     public int careerEffect(PlayerState player) {

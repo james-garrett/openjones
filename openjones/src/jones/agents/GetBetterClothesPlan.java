@@ -5,9 +5,7 @@
 package jones.agents;
 
 import jones.general.Game;
-import jones.general.Player;
 import jones.general.PlayerPosition;
-import jones.general.PlayerState;
 import jones.general.Position;
 import jones.map.Building;
 
@@ -25,10 +23,9 @@ class GetBetterClothesPlan extends AllOrNothingPlan {
     }
 
     @Override
-    public void build() {
+    public final void build() {
                         
         Game game = _agent.getGame();
-        Player player = _agent.getPlayer();
         Building clothesStore = game.getMap().getBuildingByName("QT clothing");
         assert (clothesStore != null);
         

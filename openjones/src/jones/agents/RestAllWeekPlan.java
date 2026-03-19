@@ -18,7 +18,7 @@ public class RestAllWeekPlan extends WeekPlan {
     }
 
     @Override
-    public void build() {
+    public final void build() {
                 
         _actions.add( new GoHomeMarker(this, null));
         

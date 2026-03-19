@@ -4,19 +4,21 @@
  */
 package jones.actions;
 
-import java.util.Objects;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.map.Building;
 import net.vivin.GenericTreeNode;
 
 /**
- * Used just to access a submenu, may have a duration.
+ * Used just to access a sub-menu, may have a duration.
  * Checks only time. Extend, if you need something else 
  * @author dimid
  */
 public class SubMenuAction extends Action {
-
+    protected int _duration;
+    protected String _name;
+    protected GenericTreeNode<Action> _node;
+    private final Building _building;
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -45,16 +47,8 @@ public class SubMenuAction extends Action {
         if (!(this._node == other._node)) {
             return false;
         }
-        if (!(this._building == other._building)) {
-            return false;
-        }
-        return true;
+        return this._building == other._building;
     }
-
-    protected int _duration;
-    protected String _name;
-    protected GenericTreeNode<Action> _node;
-    private final Building _building;
     
     public SubMenuAction(int duration, String name, GenericTreeNode<Action> node, Building build) {
         _duration = duration;

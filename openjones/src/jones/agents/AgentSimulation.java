@@ -22,7 +22,7 @@ import jones.map.MapManager;
  */
 public class AgentSimulation {
 
-    private static int N_WEEKS = 20;
+    private static final int N_WEEKS = 20;
     private static GUI _gui;
 
     public static int simulateRandom() {
@@ -60,7 +60,7 @@ public class AgentSimulation {
         //final Agent agent = new SearchPlanner(p1, g);        
         final Agent agent = new SearchOnDemandPlanner(p1, g);
         
-        final GUI gui;
+//        final GUI gui;
         _gui = new GUI(g);
         _gui.setVisible(true);
 //        /* Create and display the form */

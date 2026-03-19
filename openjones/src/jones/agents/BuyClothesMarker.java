@@ -6,7 +6,6 @@ package jones.agents;
 
 import jones.actions.Action;
 import jones.actions.PurchaseClothesAction;
-import jones.actions.SubMenuAction;
 import jones.general.PlayerState;
 import jones.map.Building;
 import jones.possessions.Clothes;

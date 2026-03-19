@@ -7,9 +7,6 @@ package jones.agents;
 
 
 import java.util.List;
-import jones.agents.GreedyPlanner;
-import jones.agents.Plan;
-import jones.agents.PlanScore;
 import jones.general.Game;
 import jones.general.Player;
 

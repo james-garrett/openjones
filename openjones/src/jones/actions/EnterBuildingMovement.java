@@ -4,7 +4,6 @@
  */
 package jones.actions;
 
-import jones.general.Player;
 import jones.general.PlayerPosition;
 import jones.general.PlayerState;
 import jones.map.Building;
@@ -18,15 +17,11 @@ public class EnterBuildingMovement extends Movement {
     /**
      * The time it takes to enter a building
      */
-    public static final int ENTER_BUILDING_DURATION = 2;
-
-    private Building _build;
-    
+    public static final int ENTER_BUILDING_DURATION = 2;    
     
     public EnterBuildingMovement (PlayerPosition oldpos, Building build) {
         super(new PlayerPosition(oldpos), new PlayerPosition(oldpos));
         _newPos.enterBuilding();
-        _build = build;
     }
               
     @Override

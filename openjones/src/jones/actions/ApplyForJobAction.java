@@ -5,7 +5,6 @@
 package jones.actions;
 
 import java.util.Objects;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.jobs.Job;
 
@@ -31,10 +30,7 @@ public class ApplyForJobAction extends Action {
             return false;
         }
         final ApplyForJobAction other = (ApplyForJobAction) obj;
-        if (!this._job.equals(other._job)) {
-            return false;
-        }
-        return true;
+        return this._job.equals(other._job);
     }
     /**
      * Number of TU it takes to apply

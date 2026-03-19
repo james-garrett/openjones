@@ -6,7 +6,6 @@ package jones.agents;
 
 import java.util.ArrayList;
 import jones.actions.Action;
-import jones.general.Game;
 import jones.general.PlayerState;
 
 /**

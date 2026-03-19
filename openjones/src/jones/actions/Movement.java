@@ -6,11 +6,8 @@ package jones.actions;
 
 import java.util.Objects;
 import jones.map.Grid;
-import jones.general.Player;
 import jones.general.PlayerPosition;
 import jones.general.PlayerState;
-import jones.map.Building;
-import jones.map.MapManager;
 
 /**
  *
@@ -68,11 +65,6 @@ public class Movement extends Action {
         return 0;
     }
 
-//    @Override
-//    public int WealthEffect(Player player) {
-//        return 0;
-//    }
-
     @Override
     public int timeEffect(PlayerState playerState) {
             return _duration;
@@ -118,17 +110,7 @@ public class Movement extends Action {
             return SINGLE_TILE_MOVEMENT_DURATION * dist + buildingDuration;
         }
 
-    }
-
-       
-    
-//        public static Movement getExitMovement(Position position) {
-//            PlayerPosition oldP = new PlayerPosition(position, true);
-//            PlayerPosition newP = new PlayerPosition(position, false);
-//            
-//            return new Movement(oldP, newP);
-//        }
-//    
+    } 
 
     /**
      * @return the _oldPos
@@ -137,12 +119,6 @@ public class Movement extends Action {
         return _oldPos;
     }
 
-//    /**
-//     * @param oldPos the _oldPos to set
-//     */
-//    public void setOldPos(PlayerPosition oldPos) {
-//        this._oldPos = oldPos;
-//    }
 
     /**
      * @return the _newPos
@@ -151,14 +127,6 @@ public class Movement extends Action {
         return _newPos;
     }
 
-//    /**
-//     * @param newPos the _newPos to set
-//     */
-//    public void setNewPos(PlayerPosition newPos) {
-//        this._newPos = newPos;
-//    }
-
- 
     @Override
     protected ActionResponse getPositiveResponse(PlayerState playerState) {
         return new ActionResponse(true, null);
@@ -196,10 +164,7 @@ public class Movement extends Action {
         if (!Objects.equals(this._oldPos, other._oldPos)) {
             return false;
         }
-        if (!Objects.equals(this._newPos, other._newPos)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this._newPos, other._newPos);
     }
 
 }
