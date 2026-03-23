@@ -7,10 +7,8 @@ package jones.map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import jones.actions.Action;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
-import jones.possessions.Possession;
 import net.vivin.GenericTree;
 
 /**
@@ -26,15 +24,16 @@ class PawnShop extends Building {
      *  the pawnshop must synchronyzed (e/g/ protected by a lock) to prevent race conditions
      */
     
-    private HashMap<Player, ArrayList<Possession>> _redeemables;
-    private ArrayList<Possession> _buyables;
+//    private HashMap<Player, ArrayList<Possession>> _redeemables;
+//    private ArrayList<Possession> _buyables;
     
     public PawnShop(Position pos, String name) {
         super(pos,name);
-        _redeemables = new HashMap<>();
-        _buyables = new ArrayList<>();
+//        _redeemables = new HashMap<>();
+//        _buyables = new ArrayList<>();
        // _actions.add(new PawnAction);
         //TODO
+        addJobs();
     }
 
  
@@ -45,7 +44,7 @@ class PawnShop extends Building {
 	}
 
 	@Override
-	protected void addJobs() {
+	protected final void addJobs() {
 		// TODO Auto-generated method stub
 		
 	}

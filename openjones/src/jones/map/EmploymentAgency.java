@@ -39,8 +39,8 @@ class EmploymentAgency extends Building {
                     root.addChild(buildingNode);
                     
                     //build submenu ( go back action and building`s jobs
-                    Action mainmenu =  new SubMenuAction(0, "back", root, this);
-                    GenericTreeNode<Action> mainmenuNode = new GenericTreeNode<>(mainmenu);
+//                    Action mainmenu =  new SubMenuAction(0, "back", root, this);
+//                    GenericTreeNode<Action> mainmenuNode = new GenericTreeNode<>(mainmenu);
                     //buildingNode.addChild(mainmenuNode);
                                          
                     for (Job j: jobs) {

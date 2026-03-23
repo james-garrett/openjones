@@ -7,18 +7,16 @@ package jones.general;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import jones.actions.Action;
-import static jones.general.GUI.convertToMultiline;
 import jones.map.Grid;
 import jones.map.Location;
 import jones.map.MapManager;
+
+// TODO: See if we even need this class? What's it doing??
 
 /**
  *
@@ -34,6 +32,7 @@ public class AgentGUI extends GUI  {
 
     /**
      * Creates new form GUI
+     * @param game
      */
     public AgentGUI(Game game) {
         super(game);
@@ -395,7 +394,7 @@ public class AgentGUI extends GUI  {
     }// </editor-fold>                        
 
 
-    private void endTurnButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
+//    private void endTurnButtonMouseClicked(java.awt.event.MouseEvent evt) {                                           
 
 //        //remove player text from old position
 //        PlayerPosition curPos = _game.getCurPlayer().getPos();
@@ -405,7 +404,7 @@ public class AgentGUI extends GUI  {
 //
 //        _game.endTurn();
 //        repaint();
-    }                                          
+//    }                                          
 
     /**
      * @param args the command line arguments
@@ -443,11 +442,8 @@ public class AgentGUI extends GUI  {
         //jButton21.set
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GUI(g).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUI(g).setVisible(true);
         });
     }
 
@@ -468,17 +464,11 @@ public class AgentGUI extends GUI  {
         buildingPanelLayout.setHorizontalGroup(horizParallelGroup);
         horizParallelGroup.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, horizSequentialGroup);
 
-
-
         horizSequentialGroup.addContainerGap(34, Short.MAX_VALUE);
         horizSequentialGroup.addGroup(horizParallelGroup2);
         
         horizParallelGroup2.addComponent(buildingLabel);
         horizSequentialGroup.addGap(65, 65, 65);
-
-
-
-
 
         GroupLayout.ParallelGroup vertParallelGroup = buildingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING);
         GroupLayout.SequentialGroup vertSequentialGroup = buildingPanelLayout.createSequentialGroup();
@@ -490,7 +480,6 @@ public class AgentGUI extends GUI  {
 
         vertSequentialGroup.addComponent(buildingLabel);
  
-
         Graphics2D g2d = (Graphics2D) g;
         //g2d.drawImage(bg, 0, 0, null);
         PlayerPosition curPos = _game.getCurPlayer().getPos();
@@ -550,10 +539,12 @@ public class AgentGUI extends GUI  {
         experiencesText.setText(_game.getCurPlayer().getExperiences().toString());
     }
 
+    @Override
     public int getLastSelectedBuildingActionIndex() {
         return _lastSelectedBuildingActionIndex;
     }
 
+    @Override
     public void setLastSelectedBuildingActionIndex(int _lastSelectedBuildingActionIndex) {
         this._lastSelectedBuildingActionIndex = _lastSelectedBuildingActionIndex;
     }

@@ -5,9 +5,7 @@
 package jones.map;
 
 import jones.actions.Action;
-import jones.actions.PurchaseAction;
 import jones.actions.PurchaseClothesAction;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import jones.jobs.Job;
@@ -43,7 +41,7 @@ public class ClothesStore extends Building {
         _dresslClothesPoss = new ConsumablePossession(1, dressClothes, 1.0 / dressClothes.getLifeSpanWeeks() );
         BusinessSuit busSuit = new BusinessSuit();
         _busSuitPos = new ConsumablePossession(1, busSuit, 1.0 / busSuit.getLifeSpanWeeks() );
-        
+        addJobs();
         
     }
 
@@ -67,7 +65,7 @@ public class ClothesStore extends Building {
 	}
 
 	@Override
-	protected void addJobs() {
+	protected final void addJobs() {
 	
             getJobs().add(new Job("Salesperson", this, 2, SALESPERSON_BASE_WAGE,1));           
             getJobs().add(new Job("Assistant Manager", this, 3, ASSISTANT_MANAGER_BASE_WAGE, 2));      		          

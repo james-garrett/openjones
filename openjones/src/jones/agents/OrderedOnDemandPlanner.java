@@ -9,7 +9,6 @@ import java.util.List;
 import jones.general.Game;
 import jones.general.Player;
 import jones.general.PlayerState;
-import jones.measures.ExperienceManager;
 import jones.measures.Goals;
 
 /**

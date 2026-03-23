@@ -45,6 +45,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     /**
      * Creates new form GUI
+     * @param game
      */
     public GUI(Game game) {
         _map = game.getMap();
@@ -481,27 +482,20 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         //jButton21.set
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GUI gui = new GUI(g);
-                gui.setLocationRelativeTo(null);
-                gui.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            GUI gui = new GUI(g);
+            gui.setLocationRelativeTo(null);
+            gui.setVisible(true);
         });
     }
 
@@ -1055,14 +1049,14 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         endTurnButton.setText("End Turn");
         endTurnButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 endTurnButtonMouseClicked(evt);
             }
         });
-        endTurnButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endTurnButtonActionPerformed(evt);
-            }
+        endTurnButton.addActionListener((java.awt.event.ActionEvent evt) -> {
+            endTurnButtonActionPerformed(evt);
         });
 
         javax.swing.GroupLayout aboutPanelLayout = new javax.swing.GroupLayout(aboutPanel);
@@ -1135,11 +1129,13 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
     }
 
-    public MyGlassPane getGlassPane() {
-        return _glassPane;
-    }
+    /**
+     *
+     * @return
+     */
+//    @Override
+//    public MyGlassPane getGlassPane() {
+//        return _glassPane;
+//    }
 
-    javax.swing.JButton[][] getButtons() {
-        return _buttons;
-    }
 }

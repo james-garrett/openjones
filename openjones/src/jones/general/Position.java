@@ -42,6 +42,7 @@ public class Position {
 
     }
 
+    @Override
     public String toString () {
         return "("+_x+","+_y+")";
     }
@@ -54,22 +55,21 @@ public class Position {
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
         final Position other = (Position) obj;
         if (this._x != other._x) {
             return false;
         }
-        if (this._y != other._y) {
-            return false;
-        }
-        return true;
+        return this._y == other._y;
     }
     
  

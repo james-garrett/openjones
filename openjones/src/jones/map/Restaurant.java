@@ -5,7 +5,6 @@
 package jones.map;
 
 import jones.actions.Action;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import jones.jobs.Job;
@@ -24,8 +23,8 @@ class Restaurant extends Building {
     public static final int MANAGER_BASE_WAGE = 9;
 
     public Restaurant(Position pos ,String name) {
-                super(pos,name);
-
+        super(pos,name);
+        addJobs();
     }
 
 	@Override
@@ -35,7 +34,7 @@ class Restaurant extends Building {
 	}
 
 	@Override
-	protected void addJobs() {               
+	protected final void addJobs() {               
             
             getJobs().add(new Job("Cook", this, 1, COOK_BASE_WAGE ,1, 0));            
             getJobs().add(new Job("Clerk", this, 2, CLERK_BASE_WAGE,1));           

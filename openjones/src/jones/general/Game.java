@@ -4,15 +4,10 @@
  */
 package jones.general;
 
-import jones.actions.Movement;
 import jones.actions.Action;
 import jones.map.MapManager;
 import java.util.ArrayList;
-import java.util.Iterator;
 import jones.actions.ActionResponse;
-import jones.actions.EnterBuildingMovement;
-import jones.map.Building;
-import jones.map.GridTile;
 
 /**
  *
@@ -60,6 +55,7 @@ public class Game {
 
     /**
      * Initializes the game. Adds Default buildings
+     * @param map
      */
     public Game(MapManager map) {
         this._hasStarted = false;
@@ -84,7 +80,7 @@ public class Game {
      * Adds a player to the game
      *
      * @param p player
-     * @return True iff added successfully
+     * @return True if added successfully
      */
     public boolean addPlayer(Player p) {
         if (_players.size() >= MAX_PLAYERS) {
@@ -98,7 +94,7 @@ public class Game {
      * Move player to a different position. If there's not enough time, end
      * turn.
      *
-     * @return True iff the move was completed
+     * @return True if the move was completed
      * @param pos new position
      */
     public ActionResponse movePlayer(PlayerPosition pos) {
@@ -141,13 +137,16 @@ public class Game {
     /**
      * Advances game to the next player`s turn.
      *
-     * @return True iff any player has won
+     * @return True if any player has won
      */
     public boolean endTurn() {
 
         checkVictory();
         _curPlayer = getNextPlayer();        
-        _curPlayer.startWeek();
+        if (_curPlayer != null) {
+            _curPlayer.startWeek();
+            
+        }
         changeEconomy();
         updateAnnouncements();
         _curPlayer.consume();
@@ -181,7 +180,10 @@ public class Game {
 //        return result; 
 ////        if (!hasTime()) {
 ////            endTurn();
-////        }
+////
+    /// @param actionIndex}
+    /// @param possibleActions
+    /// @return 
 //
 //        
 //        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -235,14 +237,12 @@ public class Game {
         //checkRelative();
     }
 
-    private void checkRelative() {
-        int relativeHelp = _curPlayer.getSumOfRescueFromRelative();
-        if (relativeHelp > 0) {
-            _annoncments.add(new GameAnnouncement("A relative sent you " + relativeHelp + "$"));
-        }
-
-
-    }
+//    private void checkRelative() {
+//        int relativeHelp = _curPlayer.getSumOfRescueFromRelative();
+//        if (relativeHelp > 0) {
+//            _annoncments.add(new GameAnnouncement("A relative sent you " + relativeHelp + "$"));
+//        }
+//    }
 
     private void CheckClothes() {
         if (_curPlayer.areClothesAboutToWare()) {
@@ -267,21 +267,21 @@ public class Game {
 
     }
 
-    private void checkFood() {
-        if (_curPlayer.hasFoodSpoiled()) {
-            if (_curPlayer.hasAllFoodSpoiled()) {
-                _annoncments.add(new GameAnnouncement("All your food spoiled!"));
-            } else {
-                _annoncments.add(new GameAnnouncement("Some of your food spoiled!"));
-            }
-        }
-
-    }
-
-    private void weekendEvent() {
-        _annoncments.add(new GameAnnouncement(_weekendEvent.toString()));
-
-    }
+//    private void checkFood() {
+//        if (_curPlayer.hasFoodSpoiled()) {
+//            if (_curPlayer.hasAllFoodSpoiled()) {
+//                _annoncments.add(new GameAnnouncement("All your food spoiled!"));
+//            } else {
+//                _annoncments.add(new GameAnnouncement("Some of your food spoiled!"));
+//            }
+//        }
+//
+//    }
+//
+//    private void weekendEvent() {
+//        _annoncments.add(new GameAnnouncement(_weekendEvent.toString()));
+//
+//    }
 
     public void startGame() {
         _curPlayerIndex = 0;
@@ -368,12 +368,13 @@ public class Game {
 
     
     /**     
-     * Returns a string that contains all annoncements, each in a separate line;
+     * Returns a string that contains all announcements, each in a separate line;
+     * @return 
      */
     public String getAllAnnouncements() {
        StringBuilder result = new StringBuilder(); 
        for (GameAnnouncement ga: _annoncments) {
-           result.append(ga._msg+"\n");
+           result.append(ga._msg).append("\n");
        }
        
        return result.toString();

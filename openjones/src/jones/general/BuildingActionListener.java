@@ -4,9 +4,6 @@
  */
 package jones.general;
 
-import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import jones.actions.Action;
 import jones.actions.SubMenuAction;
@@ -19,7 +16,6 @@ class BuildingActionListener extends java.awt.event.MouseAdapter{
     private final int _actionID;
     private final Game _game;
     private final GUI _gui;
-    private final JLabel _label;
     private final Action _action;
 
     BuildingActionListener(Game game, GUI gui, int a, JLabel label, Action action) {
@@ -28,11 +24,9 @@ class BuildingActionListener extends java.awt.event.MouseAdapter{
         _actionID =a;
         _game = game;
         _gui = gui;
-        _label = label;
         _action = action;
 
     }
-    final Object lock = new Object();
        
     @Override
     public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -59,8 +53,5 @@ class BuildingActionListener extends java.awt.event.MouseAdapter{
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(BuildingActionListener.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-//       
-        
     }
-
 }

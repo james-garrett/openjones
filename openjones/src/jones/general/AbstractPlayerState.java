@@ -7,14 +7,7 @@ package jones.general;
 import jones.jobs.Job;
 import jones.map.House;
 import jones.measures.Career;
-import jones.measures.Education;
-import jones.measures.ExperienceManager;
 import jones.measures.Goals;
-import jones.measures.Happiness;
-import jones.measures.Health;
-import jones.measures.Skills;
-import jones.possessions.PossessionManager;
-import jones.possessions.RentContract;
 
 /**
  *

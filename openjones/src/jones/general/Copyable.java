@@ -7,6 +7,7 @@ package jones.general;
 /**
  *
  * @author dimid
+ * @param <T>
  */
 public interface Copyable<T> {
     public T deepCopy();

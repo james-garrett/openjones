@@ -43,12 +43,12 @@ public class BuildingListener extends java.awt.event.MouseAdapter {
     
     
     public static void updateMapPanelBeforeMoving(Game game, GUI gui) {
-               PlayerPosition ppos = new PlayerPosition(0, 0, false);
+//        PlayerPosition ppos = new PlayerPosition(0, 0, false);
         
         //remove player text from old position
         PlayerPosition curPos = game.getCurPlayer().getPos();
-        javax.swing.JButton butt = gui.getButtons()[curPos.getY()][curPos.getX()];        
-        Location tile = (Location) game.getMap().getGrid().get(curPos);        
+        //javax.swing.JButton butt = gui.getButtons()[curPos.getY()][curPos.getX()];        
+        //Location tile = (Location) game.getMap().getGrid().get(curPos);        
         //butt.setText(tile.toString());        
 
     }

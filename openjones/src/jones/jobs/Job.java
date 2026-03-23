@@ -9,7 +9,6 @@ import jones.actions.ActionResponse;
 import jones.measures.Career;
 import jones.measures.Education;
 import jones.general.Game;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.measures.Skills;
 import jones.map.Building;
@@ -89,10 +88,7 @@ public class Job {
         if (!Objects.equals(this._name, other._name)) {
             return false;
         }
-        if (!Objects.equals(this._building, other._building)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this._building, other._building);
     }
 
      
@@ -174,10 +170,10 @@ public class Job {
         StringBuilder response = new StringBuilder();
         
         if (!hasEnoughExperience(playerState)) {
-            response.append("Not enough experience "+"for " +this.toString()+"\n");
+            response.append("Not enough experience for ").append(this.toString()).append("\n");
         }
         if (!hasEnoughEducation(playerState)) {
-            response.append("Not enough education "+"for " +this.toString()+"\n");
+            response.append("Not enough education for ").append(this.toString()).append("\n");
         }
        
         return new ActionResponse(response.length() == 0, response.toString());
@@ -209,8 +205,5 @@ public class Job {
 
     public int getWagePerHour() {
        return (int) (_wagePerTimeUnit * Game.TIMEUNITS_PER_HOUR);
-    }
-
-
-   
+    }   
 }

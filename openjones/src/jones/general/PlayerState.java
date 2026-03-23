@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import jones.actions.Action;
 import jones.actions.ActionResponse;
 import jones.actions.EnterBuildingMovement;
-import jones.actions.ExitBuildingMovement;
 import jones.actions.Movement;
 import jones.agents.IllegalActionException;
 import jones.agents.Plan;
@@ -149,6 +148,7 @@ public class PlayerState extends AbstractPlayerState {
         this._playerActionsParent = playerActionsParent;
     }
     
+    @Override
     public int getClock() {
         return _clock;
     }
@@ -157,6 +157,7 @@ public class PlayerState extends AbstractPlayerState {
         this._clock = _clock;
     }
 
+    @Override
     public Career getCareer() {
         return _career;
     }
@@ -205,6 +206,7 @@ public class PlayerState extends AbstractPlayerState {
         _career.add(effect);
     }
 
+    @Override
     public int getHour() {
         return _clock;
     }
@@ -440,10 +442,7 @@ public class PlayerState extends AbstractPlayerState {
         if (!Objects.equals(this._education, other._education)) {
             return false;
         }
-        if (this._cash != other._cash) {
-            return false;
-        }
-        return true;
+        return this._cash == other._cash;
     }
 
     @Override
@@ -632,7 +631,5 @@ public class PlayerState extends AbstractPlayerState {
 
     public double getSumScore() {
         return _goals.getSumScore(this, _health, _happiness, _career, _education);
-    }
-
-    
+    }   
 }

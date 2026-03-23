@@ -5,7 +5,6 @@
 package jones.map;
 
 import jones.actions.Action;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import jones.jobs.Job;
@@ -29,7 +28,7 @@ class Factory extends Building {
 
     public Factory(Position pos, String name) {
         super(pos, name);
-
+        addJobs();
     }
 
     @Override
@@ -38,7 +37,7 @@ class Factory extends Building {
     }
 
     @Override
-    protected void addJobs() {
+    protected final void addJobs() {
 
         getJobs().add(new Job("Janitor", this, 1, JANITOR_BASE_WAGE, 1));
         getJobs().add(new Job("Assembly Worker", this, 1, ASSEMBLY_WORKER_BASE_WAGE, 1));

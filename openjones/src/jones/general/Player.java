@@ -26,9 +26,9 @@ import jones.possessions.RentContract;
 public class Player extends AbstractPlayer {
     
     private int _id;
-    private String _name;
-    private PlayerState _state;
-    private PlayerGraphics _graphics;
+    private final String _name;
+    private final PlayerState _state;
+    private final PlayerGraphics _graphics;
 
     public Player (String name, PlayerGraphics graphics, MapManager map) {
     	 
@@ -38,7 +38,6 @@ public class Player extends AbstractPlayer {
         
     }
     
-   
     public Health getHealth() {
         return _state.getHealth();
     }
@@ -195,6 +194,7 @@ public class Player extends AbstractPlayer {
         return _state.getCash();
     }
 
+    @Override
     public int getTotalScore() {
         return _state.getTotalScore();
     }
@@ -203,9 +203,9 @@ public class Player extends AbstractPlayer {
          return _state.scoresString();
      }
 
-    void advanceWeeks() {
-        _state.advanceWeeks();
-    }
+//    void advanceWeeks() {
+//        _state.advanceWeeks();
+//    }
 
     public PossessionManager getPossessions() {
         return _state.getPossessions();
@@ -235,18 +235,22 @@ public class Player extends AbstractPlayer {
         _state.affectEducation(EDUCATION_POINTS_GAIN);
     }
 
+    @Override
     public double getEducationScore() {
         return _state.getGoals().educationScore(getEducation());        
     }
   
+    @Override
     public double getHealthScore() {
         return _state.getGoals().healthScore(getHealth());        
     }
     
+    @Override
     public double getCareerScore() {
         return _state.getGoals().careerScore(getCareer(), _state);        
     }
     
+    @Override
      public double getHappinessScore() {
         return _state.getGoals().happinessScore(getHappiness());        
     }
@@ -255,23 +259,16 @@ public class Player extends AbstractPlayer {
         return _state.getHappiness();
     }
     
+    @Override
     public double getWealthscore() {
         return _state.getGoals().wealthScore(_state);
     }
 
-    
     void startWeek() {
         _state.startWeek();
     }
  
-    
-
     public ArrayList<Action> getPossibletActions(MapManager map) {
         return _state.getPossibleActions(map);
-    }
-
-   
-    
-    
-            
+    }     
 }

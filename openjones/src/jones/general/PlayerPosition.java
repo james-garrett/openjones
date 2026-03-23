@@ -74,10 +74,6 @@ public class PlayerPosition extends Position {
             return false;
         
         final PlayerPosition otherPpos = (PlayerPosition) obj;
-        if (this._isInBuilding != otherPpos._isInBuilding) {
-            return false;
-        }
-        return true;
+        return this._isInBuilding == otherPpos._isInBuilding;
     }
-
 }

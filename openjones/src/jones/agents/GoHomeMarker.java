@@ -5,7 +5,6 @@
 package jones.agents;
 
 import jones.actions.Action;
-import jones.general.Player;
 import jones.general.PlayerPosition;
 import jones.general.PlayerState;
 import jones.map.House;
@@ -27,7 +26,6 @@ class GoHomeMarker extends PlanMarker {
         House home = playerState.getRentContract().getHouse();
         _plan.setLastHome(home);
         
- 
         PlayerPosition homePpos = new PlayerPosition(home.getPosition(), true);
         _plan.getActions().push(new MoveMarker(this._plan, null, homePpos));
 

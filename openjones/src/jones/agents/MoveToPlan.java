@@ -7,7 +7,6 @@ package jones.agents;
 import java.util.ArrayList;
 import jones.actions.Movement;
 import jones.general.Game;
-import jones.general.Player;
 import jones.general.PlayerPosition;
 import jones.general.Route;
 
@@ -27,9 +26,7 @@ public class MoveToPlan extends AllOrNothingPlan {
     }
 
     @Override
-    public void build() {
-          
-        Player player = _agent.getPlayer();
+    public final void build() {
 
         Game game = _agent.getGame();
         //Plan result = new Plan(agent);

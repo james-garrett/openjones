@@ -9,7 +9,7 @@ package jones.map;
  * Passable: The player may only pass it,
  *           i.e. only pass there when moving to another tile, not "land" there
  * Visitable: The player may pass and visit.
- * Enterable: The player may pass, visit and enter.
+ * Enter-able: The player may pass, visit and enter.
  *
  * @author dimid
  */

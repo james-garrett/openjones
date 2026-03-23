@@ -7,21 +7,19 @@ package jones.map;
 import jones.actions.WorkAction;
 import jones.actions.SubMenuAction;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import jones.actions.Action;
 import jones.actions.ActionResponse;
 import jones.actions.ExitBuildingMovement;
 import jones.actions.RelaxAction;
 import jones.jobs.Job;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import net.vivin.GenericTree;
 import net.vivin.GenericTreeNode;
 
 /**
- * A Building is a passable, visitable and enterable location
+ * A Building is a passable, visitable and enter-able location
  *
  * @author dimid
  */
@@ -45,12 +43,14 @@ public abstract  class Building extends Site {
     public static final int LAST_INDEX_OF_SPECIAL_ACTION = 2;
     
    
-    private final boolean _areActionsPlayerDependent;
+//    private final boolean _areActionsPlayerDependent;
     
     
     /** Create a new Building
     *
     * @param pos
+     * @param name
+     * @param areActionsPlayerDependent
     */
     public Building (Position pos, String name, boolean areActionsPlayerDependent) {
         super(pos);
@@ -58,8 +58,7 @@ public abstract  class Building extends Site {
         
         //_actions = new ArrayList<>();
         _jobs = new ArrayList<>();
-        _areActionsPlayerDependent = areActionsPlayerDependent;
-        addJobs();
+//        _areActionsPlayerDependent = areActionsPlayerDependent;
         
         if (!areActionsPlayerDependent) {
             _actionsTree = buildAllActionsTree(null);
@@ -122,6 +121,7 @@ public abstract  class Building extends Site {
      * Perform an action from getPlayerActions
      * @param actionIndex the index of the action
      * @param player the player who will carry out the action
+     * @param actions
      * @return response
      */
     public ActionResponse performAction(int actionIndex, PlayerState player, ArrayList<Action> actions) {
@@ -152,9 +152,10 @@ public abstract  class Building extends Site {
 
     /**
      * Add nodes for special actions, the subclass adds his specific actions
-     * @param player 
+     * @param playerState
+     * @return  
      */
-    public  GenericTree<Action>   buildAllActionsTree(PlayerState playerState) {
+    public final GenericTree<Action> buildAllActionsTree(PlayerState playerState) {
         GenericTree<Action> actionsTree = new GenericTree<>();
         
         GenericTreeNode<Action> root = new GenericTreeNode<>(null);
@@ -184,12 +185,12 @@ public abstract  class Building extends Site {
     }
 
    
-
-    private boolean isSpecialAction(int actionIndex) {
-        return (actionIndex == DONE_ACTION_INDEX  )   ||
-               (actionIndex == RELAX_ACTION_INDEX )   ||
-               (actionIndex == WORK_ACTION_INDEX  ); 
-    }
+//
+//    private boolean isSpecialAction(int actionIndex) {
+//        return (actionIndex == DONE_ACTION_INDEX  )   ||
+//               (actionIndex == RELAX_ACTION_INDEX )   ||
+//               (actionIndex == WORK_ACTION_INDEX  ); 
+//    }
 
     protected abstract void addJobs();
     
@@ -235,7 +236,4 @@ public abstract  class Building extends Site {
         
         return result;
     }
-
-   
-  
 }

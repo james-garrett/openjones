@@ -11,7 +11,7 @@ import jones.general.Position;
  * @author dimid
  */
 public abstract class Location implements GridTile {
-    private Position _pos;
+    private final Position _pos;
     protected String _name;
 
     /**

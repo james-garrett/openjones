@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import jones.actions.Action;
 import jones.general.PlayerPosition;
 import jones.general.PlayerState;
-import jones.map.Building;
 import net.vivin.GenericTree;
 import net.vivin.GenericTreeNode;
 

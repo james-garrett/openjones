@@ -6,11 +6,9 @@ package jones.map;
 
 import jones.actions.Action;
 import jones.actions.RelaxAction;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import net.vivin.GenericTree;
-import net.vivin.GenericTreeNode;
 
 /**
  *
@@ -23,6 +21,7 @@ public abstract class House extends Building {
     /** Create a new Building
     *
     * @param pos
+     * @param name
     */
     public House (Position pos, String name, int pricePerMonth) {
         super(pos,name);

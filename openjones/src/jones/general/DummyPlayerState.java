@@ -5,36 +5,28 @@
 package jones.general;
 
 import jones.agents.Plan;
-import jones.general.AbstractPlayerState;
 import jones.jobs.Job;
 import jones.map.House;
 import jones.measures.Career;
-import jones.measures.Education;
-import jones.measures.ExperienceManager;
 import jones.measures.Goals;
-import jones.measures.Happiness;
-import jones.measures.Health;
-import jones.measures.Skills;
-import jones.possessions.PossessionManager;
-import jones.possessions.RentContract;
 
 /**
  *
  * @author dimid
  */
 public class DummyPlayerState extends AbstractPlayerState {
-    private  double _educationScore;
-    private  double _healthScore;
-    private  double _happinessScore;
-    private  int _possesionsWorth;
-    private  Career _career;
+//    private double _educationScore;
+//    private double _healthScore;
+//    private double _happinessScore;
+    private final int _possesionsWorth;
+    private final Career _career;
             
     public DummyPlayerState(AbstractPlayerState other) {
         _career = new Career(other.getCareer());
-        _educationScore = other.getEducationScore();
-        _healthScore = other.getHealthScore();
-        _happinessScore = other.getHappinessScore();
         _possesionsWorth = other.getPossessionsWorth();
+//        _educationScore = other.getEducationScore();
+//        _healthScore = other.getHealthScore();
+//        _happinessScore = other.getHappinessScore();
     }
 
     

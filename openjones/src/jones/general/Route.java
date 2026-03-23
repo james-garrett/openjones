@@ -5,17 +5,13 @@
 package jones.general;
 
 import external.AStarPos;
-import external.Node;
-import external.Point;
 import jones.actions.Movement;
 import jones.map.MapManager;
 import java.util.ArrayList;
-import java.util.List;
 import jones.actions.EnterBuildingMovement;
 import jones.actions.ExitBuildingMovement;
 import jones.map.Building;
 import jones.map.GridTile;
-import jones.map.Wall;
 
 /**
  *
@@ -23,7 +19,7 @@ import jones.map.Wall;
  */
 public class Route {
 
-    private ArrayList<Movement> _movements;
+    private final ArrayList<Movement> _movements;
 
     private Route() {
         _movements = new ArrayList<>();
@@ -34,13 +30,13 @@ public class Route {
      *
      * @return
      */
-    int getDuration() {
-        int sum = 0;
-        for (Movement m : _movements) {
-            sum += m.timeEffect(null);
-        }
-        return sum;
-    }
+//    int getDuration() {
+//        int sum = 0;
+//        for (Movement m : _movements) {
+//            sum += m.timeEffect(null);
+//        }
+//        return sum;
+//    }
 
     public ArrayList<Movement> getMovementSequence() {
         return _movements;

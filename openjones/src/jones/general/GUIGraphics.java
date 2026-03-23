@@ -7,7 +7,6 @@ package jones.general;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import jones.map.GridTile;
 
 /**
  *
@@ -52,9 +51,9 @@ public class GUIGraphics {
                 int index = (5 * (row) + col);
                 String str;
                 if (index < 10) {
-                    str = new String("test0" + index);
+                    str = "test0" + index;
                 } else {
-                    str = new String("test" + index);
+                    str = "test" + index;
                 }
                 String filename = System.getProperty("user.dir") + "/images/" + str + ".png";
                 ImageIcon imageIcon = new javax.swing.ImageIcon(filename);

@@ -9,7 +9,6 @@ import jones.actions.Action;
 
 import jones.possessions.Stock;
 
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import net.vivin.GenericTree;
@@ -56,6 +55,4 @@ class Bank extends Building {
 		// TODO Auto-generated method stub
 		
 	}
-
-    
 }

@@ -10,7 +10,6 @@ import jones.actions.PayRentAction;
 import java.util.List;
 import jones.jobs.Job;
 import jones.actions.Action;
-import jones.general.Player;
 import jones.general.PlayerState;
 import jones.general.Position;
 import jones.possessions.RentPossession;
@@ -22,7 +21,7 @@ import net.vivin.GenericTreeNode;
  * @author dimid
  */
 public class RentAgency extends Building {
-    private  List<House> _houses;
+    private final  List<House> _houses;
      
     /**
      * Number of weeks in a month of rent
@@ -36,6 +35,7 @@ public class RentAgency extends Building {
     public RentAgency(Position pos, String name, List<House> houses) {
         super(pos,name);
         _houses = houses; 
+        addJobs();
     }
 
     @Override
@@ -43,19 +43,18 @@ public class RentAgency extends Building {
         GenericTreeNode<Action> root = actionsTree.getRoot();
         RentContract rentContract = player.getRentContract();
         if (null != rentContract) {
-            root.addChild(new GenericTreeNode<Action> (new PayRentAction(new RentPossession(rentContract.getPossession()))));
+            root.addChild(new GenericTreeNode<> (new PayRentAction(new RentPossession(rentContract.getPossession()))));
         }
         
         for (House h: _houses) {
-            root.addChild(new GenericTreeNode<Action> (new RentHouseAction(h, WEEKS_OF_RENT_IN_A_MONTH)));
+            root.addChild(new GenericTreeNode<> (new RentHouseAction(h, WEEKS_OF_RENT_IN_A_MONTH)));
         }                 
     }
 
     @Override
-    protected void addJobs() {
+    protected final void addJobs() {
         getJobs().add(new Job("Groundskeeper", this, 1, GROUNSKEEPER_BASE_WAGE,1));
-        getJobs().add(new Job("Apartment Manager", this, 2, APARTMENT_MANAGER_BASE_WAGE,2));      
-        
+        getJobs().add(new Job("Apartment Manager", this, 2, APARTMENT_MANAGER_BASE_WAGE,2));
     }
     
 }
