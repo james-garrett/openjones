@@ -1,0 +1,46 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package main.java.jones.map;
+
+import main.java.jones.actions.Action;
+import main.java.jones.general.PlayerState;
+import main.java.jones.general.Position;
+import main.java.jones.jobs.Job;
+import main.java.net.vivin.GenericTree;
+
+/**
+ *
+ * @author dimid
+ */
+class Restaurant extends Building {
+
+       
+    public static final int COOK_BASE_WAGE = 3;
+    public static final int CLERK_BASE_WAGE = 5;
+    public static final int ASSISTANT_MANAGER_BASE_WAGE = 7;
+    public static final int MANAGER_BASE_WAGE = 9;
+
+    public Restaurant(Position pos ,String name) {
+        super(pos,name);
+        addJobs();
+    }
+
+	@Override
+	protected void buildActionsTree(PlayerState player, GenericTree<Action> actionsTree) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected final void addJobs() {               
+            
+            getJobs().add(new Job("Cook", this, 1, COOK_BASE_WAGE ,1, 0));            
+            getJobs().add(new Job("Clerk", this, 2, CLERK_BASE_WAGE,1));           
+            getJobs().add(new Job("Assistant Manager", this, 3, ASSISTANT_MANAGER_BASE_WAGE, 2));      		          
+            getJobs().add(new Job("Manager", this, 4, MANAGER_BASE_WAGE,3));      		
+		
+	}
+    
+}
