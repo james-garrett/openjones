@@ -90,8 +90,9 @@ public class GameTest {
         boolean expResult = false;
         boolean result = instance.hasStarted();
         assertEquals(expResult, result);
+        instance.startGame();
+        assertEquals(true, instance.hasStarted());
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -105,7 +106,6 @@ public class GameTest {
         boolean result = instance.hasEnded();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -312,6 +312,8 @@ public class GameTest {
         System.out.println("startGame");
         Game instance = null;
         instance.startGame();
+//        instance.
+//        assertEquals()
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

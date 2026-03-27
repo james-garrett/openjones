@@ -23,7 +23,7 @@ import main.java.net.vivin.GenericTreeNode;
  *
  * @author dimid
  */
-public abstract  class Building extends Site {
+public abstract class Building extends Site {
     protected ArrayList<Job> _jobs;
     //protected ArrayList<Action> _actions;
 //    protected GenericTreeNode<Action> _playerActionsParent;

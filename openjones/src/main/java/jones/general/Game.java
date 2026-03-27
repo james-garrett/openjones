@@ -63,7 +63,8 @@ public class Game {
         
         if (null == map) {
             _map = MapManager.getDefaultMap();
-        } else {            _map = map;
+        } else {            
+            _map = map;
         }
 
         _players = new ArrayList<>();

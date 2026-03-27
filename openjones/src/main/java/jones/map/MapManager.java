@@ -184,10 +184,6 @@ public class MapManager {
 //        _walls.get(6).setName("pawn_bot");
 //        _walls.get(1).setName("black_right");
 //        _walls.get(7).setName("clothing_left");
-//      
-     
-        
-        //addDefaultBuildings();
         
     }
 
