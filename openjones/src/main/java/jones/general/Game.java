@@ -42,15 +42,15 @@ public class Game {
     private ArrayList<Player> _victors; // = new ArrayList<>;
     private MapManager _map;
     private EconomyManager _economy; //holds a list of stocks and updates them
-    private ArrayList<GameAnnouncement> _annoncments;
+    private ArrayList<GameAnnouncement> _announcments;
     private Action _weekendEvent;
 
     public boolean hasAnnouncements() {
-        return !_annoncments.isEmpty();
+        return !_announcments.isEmpty();
     }
 
     public ArrayList<GameAnnouncement> getAnnouncements() {
-        return _annoncments;
+        return _announcments;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Game {
         _economy = new ConstantEconomyModel();
         _curPlayerIndex = -1;
         _curPlayer = null;
-        _annoncments = new ArrayList<>();
+        _announcments = new ArrayList<>();
     }
 
     /**
@@ -98,7 +98,8 @@ public class Game {
      * @param pos new position
      */
     public ActionResponse movePlayer(PlayerPosition pos) {
-        return _curPlayer.getState().movePlayer(pos, _map);
+        PlayerState state = _curPlayer.getState();
+        return state.movePlayer(pos, _map);
 //        Action event = _eventGen.getRandomRoadEvent(_curPlayer);
 //        event.perform (_curPlayer);
 
@@ -192,7 +193,7 @@ public class Game {
         
         ActionResponse result =  _curPlayer.getState().performBuildingAction(actionIndex, _map, possibleActions);
         if (null != result._message) {
-            _annoncments.add(new GameAnnouncement(result._message+"\n"));
+            _announcments.add(new GameAnnouncement(result._message+"\n"));
         }
         return result;
 
@@ -229,7 +230,7 @@ public class Game {
     
 
     private void updateAnnouncements() {
-        _annoncments.clear();
+        _announcments.clear();
         //weekendEvent();
         //checkFood();
         checkRent();
@@ -240,13 +241,13 @@ public class Game {
 //    private void checkRelative() {
 //        int relativeHelp = _curPlayer.getSumOfRescueFromRelative();
 //        if (relativeHelp > 0) {
-//            _annoncments.add(new GameAnnouncement("A relative sent you " + relativeHelp + "$"));
+//            _announcments.add(new GameAnnouncement(Constants.ARelativeSentYou + relativeHelp + "$"));
 //        }
 //    }
 
     private void CheckClothes() {
         if (_curPlayer.areClothesAboutToWare()) {
-            _annoncments.add(new GameAnnouncement("You need new clothes"));
+            _announcments.add(new GameAnnouncement(Constants.NeedNewClothes));
         }
 
     }
@@ -262,7 +263,7 @@ public class Game {
      */
     private void checkRent() {
         if (_curPlayer.isRentDue() && (_curPlayer.getWeeks() - _curPlayer.getlastRentAnnouncement()) >= MIN_PERIOD_BETWEEN_RENT_ANNOUNCEMENTS) {
-            _annoncments.add(new GameAnnouncement("Rent is due"));
+            _announcments.add(new GameAnnouncement(Constants.RentIsDue));
         }
 
     }
@@ -270,16 +271,16 @@ public class Game {
 //    private void checkFood() {
 //        if (_curPlayer.hasFoodSpoiled()) {
 //            if (_curPlayer.hasAllFoodSpoiled()) {
-//                _annoncments.add(new GameAnnouncement("All your food spoiled!"));
+//                _announcments.add(new GameAnnouncement(Constants.AllFoodSpoiled));
 //            } else {
-//                _annoncments.add(new GameAnnouncement("Some of your food spoiled!"));
+//                _announcments.add(new GameAnnouncement(Constants.SomeFoodSpoiled));
 //            }
 //        }
 //
 //    }
 //
 //    private void weekendEvent() {
-//        _annoncments.add(new GameAnnouncement(_weekendEvent.toString()));
+//        _announcments.add(new GameAnnouncement(_weekendEvent.toString()));
 //
 //    }
 
@@ -289,7 +290,7 @@ public class Game {
         
         _curPlayer.gotoStartPosition();
         _curPlayer.setClock(0);
-        _annoncments.add(new GameAnnouncement("Good Luck!"));
+        _announcments.add(new GameAnnouncement(Constants.GoodLuck));
         _hasStarted = true;
 
     }
@@ -350,12 +351,12 @@ public class Game {
         this._economy = economy;
     }
 
-    public ArrayList<GameAnnouncement> getAnnoncments() {
-        return _annoncments;
+    public ArrayList<GameAnnouncement> getAnnouncments() {
+        return _announcments;
     }
 
-    public void setAnnoncments(ArrayList<GameAnnouncement> annoncments) {
-        this._annoncments = annoncments;
+    public void setAnnouncments(ArrayList<GameAnnouncement> annoncments) {
+        this._announcments = annoncments;
     }
 
     public Action getWeekendEvent() {
@@ -373,7 +374,8 @@ public class Game {
      */
     public String getAllAnnouncements() {
        StringBuilder result = new StringBuilder(); 
-       for (GameAnnouncement ga: _annoncments) {
+       for (GameAnnouncement ga: _announcments) {
+           //TODO - is this extra newline necessary?
            result.append(ga._msg).append("\n");
        }
        
@@ -388,7 +390,7 @@ public class Game {
         for (Player p : _players) {
             if (p.hasWon()) {
                 _victors.add(p);
-                vicorsAnnouncements.add(new GameAnnouncement(p.getName()+" has won!"));
+                vicorsAnnouncements.add(new GameAnnouncement(p.getName()+Constants.HasWon));
             }
         }
         
@@ -397,8 +399,8 @@ public class Game {
         
         if (!_victors.isEmpty()) {
             _hasEnded = true;
-            _annoncments.clear();
-            _annoncments.addAll(vicorsAnnouncements);
+            _announcments.clear();
+            _announcments.addAll(vicorsAnnouncements);
             return true;
         }
         

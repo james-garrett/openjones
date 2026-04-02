@@ -14,7 +14,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -43,9 +46,19 @@ public class GameTest {
     private Action _weekendEvent;
     
     private MapManager mockMap;
+    private Player testPlayer;
+    private final Game gameInstance;
+    
+    private Player playerSpy = mock(Player.class);
+    
+    private static final Logger log = LoggerFactory.getLogger(GameTest.class);
     
     public GameTest() {
         mockMap = mock(MapManager.class);
+        gameInstance = new Game(mockMap);
+//        _map = new MapManager();
+//        testPlayer = new Player("TestPlayer", null, mockMap);
+        testPlayer = mock(Player.class);
         this._hasStarted = false;
         this._hasEnded = false;      
         
@@ -86,13 +99,13 @@ public class GameTest {
     @Test
     public void testHasStarted() {
         System.out.println("hasStarted");
-        Game instance = new Game(mockMap);
         boolean expResult = false;
-        boolean result = instance.hasStarted();
+        boolean result = gameInstance.hasStarted();
         assertEquals(expResult, result);
-        instance.startGame();
-        assertEquals(true, instance.hasStarted());
-        // TODO review the generated test code and remove the default call to fail.
+        assertEquals(gameInstance.hasEnded(), false);
+        gameInstance.addPlayer(testPlayer);
+        gameInstance.startGame();
+        assertEquals(true, gameInstance.hasStarted());
     }
 
     /**
@@ -101,11 +114,14 @@ public class GameTest {
     @Test
     public void testHasEnded() {
         System.out.println("hasEnded");
-        Game instance = null;
-        boolean expResult = false;
-        boolean result = instance.hasEnded();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        assertEquals(gameInstance.hasStarted(), false);
+        assertEquals(gameInstance.hasEnded(), false);
+        gameInstance.addPlayer(playerSpy);
+        gameInstance.startGame();
+        Mockito.doReturn(true).when(playerSpy).hasWon();
+        gameInstance.endTurn();
+        boolean result = gameInstance.hasEnded();
+        assertEquals(true, result);
     }
 
     /**
@@ -114,40 +130,82 @@ public class GameTest {
     @Test
     public void testGetCurPlayer() {
         System.out.println("getCurPlayer");
-        Game instance = null;
         Player expResult = null;
-        Player result = instance.getCurPlayer();
+        Player result = gameInstance.getCurPlayer();
         assertEquals(expResult, result);
+        
+        gameInstance.addPlayer(testPlayer);
+        gameInstance.startGame();
+        assertEquals(gameInstance.getCurPlayer(), testPlayer);
+        Player player2 = gameInstance.getCurPlayer();
+        
+        gameInstance.endTurn();
+        assertEquals(gameInstance.getCurPlayer(), player2);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of hasAnnouncements method, of class Game.
+     * This tests announcements by ending a turn, and mocking the player 
+     * state areClothesAboutToWare() so that an announcement is added 
+     * "You need new clothes" to _announcements. It's a little bit of code 
+     * manipulation because we don't have direct access for adding 
+     * announcements.
      */
     @Test
     public void testHasAnnouncements() {
         System.out.println("hasAnnouncements");
-        Game instance = null;
         boolean expResult = false;
-        boolean result = instance.hasAnnouncements();
+        boolean result = gameInstance.hasAnnouncements();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        gameInstance.addPlayer(playerSpy);
+        Mockito.doReturn(true).when(playerSpy).areClothesAboutToWare();
+        gameInstance.endTurn();
+        assertEquals(gameInstance.hasAnnouncements(), true);
     }
 
     /**
-     * Test of getAnnouncements method, of class Game.
+     * Test of getAnnouncements method, slightly extended version of 
+     * hasAnnouncements test
      */
     @Test
     public void testGetAnnouncements() {
-        System.out.println("getAnnouncements");
-        Game instance = null;
-        ArrayList<GameAnnouncement> expResult = null;
-        ArrayList<GameAnnouncement> result = instance.getAnnouncements();
+        System.out.println("hasAnnouncements");
+        boolean expResult = false;
+        boolean result = gameInstance.hasAnnouncements();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        gameInstance.addPlayer(playerSpy);
+        Mockito.doReturn(true).when(playerSpy).areClothesAboutToWare();
+        gameInstance.endTurn();
+        assertEquals(gameInstance.hasAnnouncements(), true);
+        ArrayList<GameAnnouncement> announcementList = gameInstance.getAnnouncements();
+        GameAnnouncement announcement = announcementList.get(0);
+        System.out.println(String.format("Announcements contains: %s", announcement._msg));
+        assertEquals(Constants.NeedNewClothes, announcement._msg);
+    }
+    
+        /**
+     * Test of getAllAnnouncements method, of class Game.
+     */
+    @Test
+    public void testGetAllAnnouncements() {
+        System.out.println("getAllAnnouncements");
+        boolean expResult = false;
+        boolean result = gameInstance.hasAnnouncements();
+        assertEquals(expResult, result);
+        
+        gameInstance.addPlayer(playerSpy);
+        gameInstance.startGame();
+        Mockito.doReturn(true).when(playerSpy).areClothesAboutToWare();
+        assertEquals(gameInstance.hasAnnouncements(), true);
+        ArrayList<GameAnnouncement> announcementList = gameInstance.getAnnouncements();
+        GameAnnouncement announcement = announcementList.get(0);
+        assertEquals(Constants.GoodLuck, announcement._msg);
+        gameInstance.endTurn();
+        announcement = announcementList.get(1);
+        System.out.println(String.format("Announcements contains: %s", announcement._msg));
+        assertEquals(Constants.NeedNewClothes, announcement._msg);
     }
 
     /**
@@ -155,30 +213,23 @@ public class GameTest {
      */
     @Test
     public void testAddPlayer() {
-        System.out.println("addPlayer");
-        Player p = null;
-        Game instance = null;
-        boolean expResult = false;
-        boolean result = instance.addPlayer(p);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Add player
+        //succeeds because there's enough spots
+        //Add 3 more players
+        //Each operation should succeed until we try adding a 5th player
+        boolean addSuccessful;
+        for(int i = 0; i < 4; i++) {
+            addSuccessful = gameInstance.addPlayer(testPlayer);
+            assertEquals(addSuccessful, true);
+        }
+        addSuccessful = gameInstance.addPlayer(testPlayer);
+        assertEquals(addSuccessful, false);
     }
 
     /**
      * Test of movePlayer method, of class Game.
      */
-    @Test
-    public void testMovePlayer() {
-        System.out.println("movePlayer");
-        PlayerPosition pos = null;
-        Game instance = null;
-        ActionResponse expResult = null;
-        ActionResponse result = instance.movePlayer(pos);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+
 
     /**
      * Test of enterBuilding method, of class Game.
@@ -186,8 +237,7 @@ public class GameTest {
     @Test
     public void testEnterBuilding() {
         System.out.println("enterBuilding");
-        Game instance = null;
-        instance.enterBuilding();
+        gameInstance.enterBuilding();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -198,8 +248,7 @@ public class GameTest {
     @Test
     public void testLeaveBuilding() {
         System.out.println("leaveBuilding");
-        Game instance = null;
-        instance.leaveBuilding();
+        gameInstance.leaveBuilding();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -210,9 +259,8 @@ public class GameTest {
     @Test
     public void testEndTurn() {
         System.out.println("endTurn");
-        Game instance = null;
         boolean expResult = false;
-        boolean result = instance.endTurn();
+        boolean result = gameInstance.endTurn();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -226,9 +274,8 @@ public class GameTest {
         System.out.println("performBuildingAction");
         int actionIndex = 0;
         ArrayList<Action> possibleActions = null;
-        Game instance = null;
         ActionResponse expResult = null;
-        ActionResponse result = instance.performBuildingAction(actionIndex, possibleActions);
+        ActionResponse result = gameInstance.performBuildingAction(actionIndex, possibleActions);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -240,9 +287,8 @@ public class GameTest {
     @Test
     public void testHasTime() {
         System.out.println("hasTime");
-        Game instance = null;
         boolean expResult = false;
-        boolean result = instance.hasTime();
+        boolean result = gameInstance.hasTime();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -254,9 +300,8 @@ public class GameTest {
     @Test
     public void testGetPossibletActions() {
         System.out.println("getPossibletActions");
-        Game instance = null;
         ArrayList<Action> expResult = null;
-        ArrayList<Action> result = instance.getPossibletActions();
+        ArrayList<Action> result = gameInstance.getPossibletActions();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -268,9 +313,8 @@ public class GameTest {
     @Test
     public void testGetTime() {
         System.out.println("getTime");
-        Game instance = null;
         int expResult = 0;
-        int result = instance.getTime();
+        int result = gameInstance.getTime();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -282,9 +326,8 @@ public class GameTest {
     @Test
     public void testGetWeek() {
         System.out.println("getWeek");
-        Game instance = null;
         int expResult = 0;
-        int result = instance.getWeek();
+        int result = gameInstance.getWeek();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -296,9 +339,8 @@ public class GameTest {
     @Test
     public void testIsInside() {
         System.out.println("isInside");
-        Game instance = null;
         boolean expResult = false;
-        boolean result = instance.isInside();
+        boolean result = gameInstance.isInside();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -310,9 +352,8 @@ public class GameTest {
     @Test
     public void testStartGame() {
         System.out.println("startGame");
-        Game instance = null;
-        instance.startGame();
-//        instance.
+        gameInstance.startGame();
+//        gameInstance.
 //        assertEquals()
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -324,9 +365,8 @@ public class GameTest {
     @Test
     public void testGetPlayers() {
         System.out.println("getPlayers");
-        Game instance = null;
         ArrayList<Player> expResult = null;
-        ArrayList<Player> result = instance.getPlayers();
+        ArrayList<Player> result = gameInstance.getPlayers();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -339,8 +379,7 @@ public class GameTest {
     public void testSetPlayers() {
         System.out.println("setPlayers");
         ArrayList<Player> players = null;
-        Game instance = null;
-        instance.setPlayers(players);
+        gameInstance.setPlayers(players);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -351,9 +390,8 @@ public class GameTest {
     @Test
     public void testGetEventGen() {
         System.out.println("getEventGen");
-        Game instance = null;
         EventManager expResult = null;
-        EventManager result = instance.getEventGen();
+        EventManager result = gameInstance.getEventGen();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -366,8 +404,7 @@ public class GameTest {
     public void testSetEventGen() {
         System.out.println("setEventGen");
         EventManager eventGen = null;
-        Game instance = null;
-        instance.setEventGen(eventGen);
+        gameInstance.setEventGen(eventGen);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -378,9 +415,8 @@ public class GameTest {
     @Test
     public void testGetCurPlayerIndex() {
         System.out.println("getCurPlayerIndex");
-        Game instance = null;
         int expResult = 0;
-        int result = instance.getCurPlayerIndex();
+        int result = gameInstance.getCurPlayerIndex();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -393,8 +429,7 @@ public class GameTest {
     public void testSetCurPlayerIndex() {
         System.out.println("setCurPlayerIndex");
         int curPlayerIndex = 0;
-        Game instance = null;
-        instance.setCurPlayerIndex(curPlayerIndex);
+        gameInstance.setCurPlayerIndex(curPlayerIndex);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -405,9 +440,8 @@ public class GameTest {
     @Test
     public void testGetClothesLevel() {
         System.out.println("getClothesLevel");
-        Game instance = null;
         int expResult = 0;
-        int result = instance.getClothesLevel();
+        int result = gameInstance.getClothesLevel();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -420,8 +454,7 @@ public class GameTest {
     public void testSetClothesLevel() {
         System.out.println("setClothesLevel");
         int clothesLevel = 0;
-        Game instance = null;
-        instance.setClothesLevel(clothesLevel);
+        gameInstance.setClothesLevel(clothesLevel);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -432,9 +465,8 @@ public class GameTest {
     @Test
     public void testGetVictors() {
         System.out.println("getVictors");
-        Game instance = null;
         ArrayList<Player> expResult = null;
-        ArrayList<Player> result = instance.getVictors();
+        ArrayList<Player> result = gameInstance.getVictors();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -447,8 +479,7 @@ public class GameTest {
     public void testSetVictors() {
         System.out.println("setVictors");
         ArrayList<Player> victors = null;
-        Game instance = null;
-        instance.setVictors(victors);
+        gameInstance.setVictors(victors);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -459,9 +490,8 @@ public class GameTest {
     @Test
     public void testGetMap() {
         System.out.println("getMap");
-        Game instance = null;
         MapManager expResult = null;
-        MapManager result = instance.getMap();
+        MapManager result = gameInstance.getMap();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -474,8 +504,7 @@ public class GameTest {
     public void testSetMap() {
         System.out.println("setMap");
         MapManager map = null;
-        Game instance = null;
-        instance.setMap(map);
+        gameInstance.setMap(map);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -486,9 +515,9 @@ public class GameTest {
     @Test
     public void testGetEconomy() {
         System.out.println("getEconomy");
-        Game instance = null;
+        Game gameInstance = null;
         EconomyManager expResult = null;
-        EconomyManager result = instance.getEconomy();
+        EconomyManager result = gameInstance.getEconomy();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -501,8 +530,7 @@ public class GameTest {
     public void testSetEconomy() {
         System.out.println("setEconomy");
         EconomyManager economy = null;
-        Game instance = null;
-        instance.setEconomy(economy);
+        gameInstance.setEconomy(economy);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -513,9 +541,8 @@ public class GameTest {
     @Test
     public void testGetAnnoncments() {
         System.out.println("getAnnoncments");
-        Game instance = null;
         ArrayList<GameAnnouncement> expResult = null;
-        ArrayList<GameAnnouncement> result = instance.getAnnoncments();
+        ArrayList<GameAnnouncement> result = gameInstance.getAnnouncments();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -528,8 +555,7 @@ public class GameTest {
     public void testSetAnnoncments() {
         System.out.println("setAnnoncments");
         ArrayList<GameAnnouncement> annoncments = null;
-        Game instance = null;
-        instance.setAnnoncments(annoncments);
+        gameInstance.setAnnouncments(annoncments);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -540,9 +566,8 @@ public class GameTest {
     @Test
     public void testGetWeekendEvent() {
         System.out.println("getWeekendEvent");
-        Game instance = null;
         Action expResult = null;
-        Action result = instance.getWeekendEvent();
+        Action result = gameInstance.getWeekendEvent();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -555,21 +580,20 @@ public class GameTest {
     public void testSetWeekendEvent() {
         System.out.println("setWeekendEvent");
         Action weekendEvent = null;
-        Game instance = null;
-        instance.setWeekendEvent(weekendEvent);
+        gameInstance.setWeekendEvent(weekendEvent);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of getAllAnnouncements method, of class Game.
-     */
+    
+    
+    //TODO - Finish these tests once we've fully implemented these functions
+    
     @Test
-    public void testGetAllAnnouncements() {
-        System.out.println("getAllAnnouncements");
-        Game instance = null;
-        String expResult = "";
-        String result = instance.getAllAnnouncements();
+    public void testMovePlayer() {
+        System.out.println("movePlayer");
+        PlayerPosition pos = null;
+        ActionResponse expResult = null;
+        ActionResponse result = gameInstance.movePlayer(pos);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
