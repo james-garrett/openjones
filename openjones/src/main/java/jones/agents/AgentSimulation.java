@@ -83,7 +83,7 @@ public class AgentSimulation {
         Game game = agent.getGame();
 
         while (agent.hasNextAction() && game.getWeek() <= N_WEEKS && !game.hasEnded()) {
-            ArrayList<Action> possibletActions = game.getPossibletActions();
+            ArrayList<Action> possibletActions = game.getPossibleActions();
             int choice = agent.selectAction(possibletActions);
             if (Game.NOOP_ACTION_INDEX == choice) {
                 continue;

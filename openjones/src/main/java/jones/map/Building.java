@@ -204,6 +204,13 @@ public abstract class Building extends Site {
     
     protected abstract void buildActionsTree(PlayerState player, GenericTree<Action> actionsTree);
    
+    /**
+     * This seems to be where all the possible player actions for a building are
+     * defined? Except I can't see buy actions.
+     * @param playerState
+     * @return 
+     */
+    
     public List<Action> getPlayerBuildingSpecialActions(PlayerState playerState) {
                
         GenericTreeNode<Action> root = playerState.getActionsTree().getRoot();

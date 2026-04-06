@@ -500,7 +500,7 @@ public class AgentGUI extends GUI  {
         
         //populate building panel
         if (curPos.isInBuilding()) {           
-            ArrayList<? extends Action> possibletActions = _game.getPossibletActions();
+            ArrayList<? extends Action> possibletActions = _game.getPossibleActions();
             //_buildingActionLabels = new JLabel
             int actionID = 0;
             for (Action a : possibletActions) {

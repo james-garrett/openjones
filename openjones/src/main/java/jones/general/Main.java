@@ -36,7 +36,7 @@ public class Main {
         Position homePos =map.getLowestHousing().getPosition();
         PlayerPosition homePosInside = new PlayerPosition(homePos, true);
         g.movePlayer(homePosInside);
-        ArrayList<Action> gePossibletActions = g.getPossibletActions();
+        ArrayList<Action> gePossibletActions = g.getPossibleActions();
         g.performBuildingAction(Building.RELAX_ACTION_INDEX, gePossibletActions);
         
         Position rentAgencyPos = new Position(1, 0);
@@ -44,7 +44,7 @@ public class Main {
         RentAgency rentAgency = (RentAgency) map.getGrid().get(rentAgencyPos);
         g.getCurPlayer().getState().setJob(rentAgency.getJobs().get(0)); //groundkeeper
         g.movePlayer(rentAgencyPosInside);
-        gePossibletActions = g.getPossibletActions();
+        gePossibletActions = g.getPossibleActions();
         
         //while (g.hasTime())
         g.performBuildingAction(Building.WORK_ACTION_INDEX, gePossibletActions);

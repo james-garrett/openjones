@@ -44,7 +44,7 @@ class GetABetterJobPlan extends AllOrNothingPlan {
 //        
 //        //submenu actions of buildings
 //        //List<Action> buildingSpecificActions = employmentAgency.getPlayerBuildingSpecificActions(player);
-//        ArrayList<? extends Action> possibletActions = game.getPossibletActions();
+//        ArrayList<? extends Action> possibletActions = game.getPossibleActions();
 //        SubMenuAction buildingJobs;
 //        
 //        for (int buildingIndex = Building.LAST_INDEX_OF_SPECIAL_ACTION + 1; buildingIndex < possibletActions.size(); ++buildingIndex) {

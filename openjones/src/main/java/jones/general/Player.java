@@ -31,11 +31,9 @@ public class Player extends AbstractPlayer {
     private final PlayerGraphics _graphics;
 
     public Player (String name, PlayerGraphics graphics, MapManager map) {
-    	 
         _name = name;
         _state = new PlayerState(map);
         _graphics = graphics;
-        
     }
     
     public Health getHealth() {
@@ -268,7 +266,7 @@ public class Player extends AbstractPlayer {
         _state.startWeek();
     }
  
-    public ArrayList<Action> getPossibletActions(MapManager map) {
+    public ArrayList<Action> getPossibleActions(MapManager map) {
         return _state.getPossibleActions(map);
     }     
 }

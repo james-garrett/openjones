@@ -27,7 +27,14 @@ public class Game {
     public final int MIN_PERIOD_BETWEEN_RENT_ANNOUNCEMENTS = 4;
     private boolean _hasStarted;
     private boolean _hasEnded;
+    private ArrayList<Player> _victors; // = new ArrayList<>;
+    private MapManager _map;
+    private EconomyManager _economy; //holds a list of stocks and updates them
+    private ArrayList<GameAnnouncement> _announcments;
+    private Action _weekendEvent;
 
+    // -- Getters and Setters -------------------------------------------------
+    
     public boolean hasStarted() {
         return _hasStarted;
     }
@@ -39,11 +46,6 @@ public class Game {
     public Player getCurPlayer() {
         return _curPlayer;
     }
-    private ArrayList<Player> _victors; // = new ArrayList<>;
-    private MapManager _map;
-    private EconomyManager _economy; //holds a list of stocks and updates them
-    private ArrayList<GameAnnouncement> _announcments;
-    private Action _weekendEvent;
 
     public boolean hasAnnouncements() {
         return !_announcments.isEmpty();
@@ -52,249 +54,7 @@ public class Game {
     public ArrayList<GameAnnouncement> getAnnouncements() {
         return _announcments;
     }
-
-    /**
-     * Initializes the game. Adds Default buildings
-     * @param map
-     */
-    public Game(MapManager map) {
-        this._hasStarted = false;
-        this._hasEnded = false;      
-        
-        if (null == map) {
-            _map = MapManager.getDefaultMap();
-        } else {            
-            _map = map;
-        }
-
-        _players = new ArrayList<>();
-        _victors = new ArrayList<>();
-        _eventGen = new EventManager();
-        _economy = new ConstantEconomyModel();
-        _curPlayerIndex = -1;
-        _curPlayer = null;
-        _announcments = new ArrayList<>();
-    }
-
-    /**
-     * Adds a player to the game
-     *
-     * @param p player
-     * @return True if added successfully
-     */
-    public boolean addPlayer(Player p) {
-        if (_players.size() >= MAX_PLAYERS) {
-            return false;
-        }
-        _players.add(p);
-        return true;
-    }
-
-    /**
-     * Move player to a different position. If there's not enough time, end
-     * turn.
-     *
-     * @return True if the move was completed
-     * @param pos new position
-     */
-    public ActionResponse movePlayer(PlayerPosition pos) {
-        PlayerState state = _curPlayer.getState();
-        return state.movePlayer(pos, _map);
-//        Action event = _eventGen.getRandomRoadEvent(_curPlayer);
-//        event.perform (_curPlayer);
-
-//        Route route = Route.findRoute(_curPlayer.getState().getPos(), pos, _map);
-//        ArrayList<Movement> path = route.getMovementSequence();
-//        Iterator<Movement> iter = path.iterator();
-//        while (hasTime() && iter.hasNext()) {
-//            Movement move = iter.next();
-//            move.perform(_curPlayer.getState());//updates player state and calls 
-////            if (!hasTime()) {
-////                endTurn();
-////            }
-//
-//        }
-//        
-//        if (!hasTime() && iter.hasNext())
-//            return new ActionResponse(false, "Not enough time to complete move");
-//        else
-//            return new ActionResponse(true, null);
-        
-    }
-
-    public void enterBuilding() {
-        PlayerPosition pos = _curPlayer.getState().getPos();
-        pos.enterBuilding();
-        movePlayer(pos);
-    }
-
-    public void leaveBuilding() {
-        PlayerPosition pos = _curPlayer.getState().getPos();
-        pos.exitBuilding();
-        movePlayer(pos);
-    }
-
     
-    /**
-     * Advances game to the next player`s turn.
-     *
-     * @return True if any player has won
-     */
-    public boolean endTurn() {
-
-        checkVictory();
-        _curPlayer = getNextPlayer();        
-        if (_curPlayer != null) {
-            _curPlayer.startWeek();
-            
-        }
-        changeEconomy();
-        updateAnnouncements();
-        _curPlayer.consume();
-
-        return false;
-    }
-
-    private Player getNextPlayer() {
-        if (_players.isEmpty()) {
-            return null;
-        }
-
-        if (_players.size() - 1 > _curPlayerIndex) {
-            ++_curPlayerIndex;
-            return _players.get(_curPlayerIndex);
-        } else {
-            _curPlayerIndex = 0;
-            return _players.get(_curPlayerIndex);
-        }
-
-    }
-
-    private void changeEconomy() {
-        _economy.changeStocks();
-        _economy.changeBuildings(_map.buildingsIterator()); //prices + salaries 
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-//    private String performAction(Action event, Player _curPlayer) {
-//        String result = event.perform(_curPlayer);
-//        return result; 
-////        if (!hasTime()) {
-////            endTurn();
-////
-    /// @param actionIndex}
-    /// @param possibleActions
-    /// @return 
-//
-//        
-//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-    public ActionResponse performBuildingAction(int actionIndex, ArrayList<Action> possibleActions) {
-        
-        ActionResponse result =  _curPlayer.getState().performBuildingAction(actionIndex, _map, possibleActions);
-        if (null != result._message) {
-            _announcments.add(new GameAnnouncement(result._message+"\n"));
-        }
-        return result;
-
-    }
-
-    public boolean hasTime() {
-        return _curPlayer.getState().getHour() < TIMEUNITS_PER_WEEK;
-    }
-
-    /**
-     * Get all possible actions the current player can perform. If he is inside
-     * a building, returns the building's actions and an exit action Otherwise,
-     * returns all movements (a movement for each building)
-     *
-     * @return
-     */
-    public ArrayList<Action> getPossibletActions() {        
-            return _curPlayer.getPossibletActions(_map);      
-    }
-
- 
-    public int getTime() {
-        return _curPlayer.getState().getHour();
-    }
-
-    public int getWeek() {
-        return _curPlayer.getState().getWeeks();
-    }
-
-    public boolean isInside() {
-        return _curPlayer.getState().getPos().isInBuilding();
-    }
-
-    
-
-    private void updateAnnouncements() {
-        _announcments.clear();
-        //weekendEvent();
-        //checkFood();
-        checkRent();
-        CheckClothes();
-        //checkRelative();
-    }
-
-//    private void checkRelative() {
-//        int relativeHelp = _curPlayer.getSumOfRescueFromRelative();
-//        if (relativeHelp > 0) {
-//            _announcments.add(new GameAnnouncement(Constants.ARelativeSentYou + relativeHelp + "$"));
-//        }
-//    }
-
-    private void CheckClothes() {
-        if (_curPlayer.areClothesAboutToWare()) {
-            _announcments.add(new GameAnnouncement(Constants.NeedNewClothes));
-        }
-
-    }
-
-    /**
-     * Rent model: The player starts with 4 WORs (weeks of rent), and a rent
-     * debt of 0. Every turn, one WOR is consumed. Whenever the player reaches 0
-     * week, he player receives an announcement (in condition that at least 4
-     * weeks have passed since the last announcement). Every week, if the player
-     * has 0 WOR (before consuming), the rent debt is increased by the value of
-     * 1 WOR. The debt is garnished from the player's wage, and prevent from
-     * signing a rent contract.
-     */
-    private void checkRent() {
-        if (_curPlayer.isRentDue() && (_curPlayer.getWeeks() - _curPlayer.getlastRentAnnouncement()) >= MIN_PERIOD_BETWEEN_RENT_ANNOUNCEMENTS) {
-            _announcments.add(new GameAnnouncement(Constants.RentIsDue));
-        }
-
-    }
-
-//    private void checkFood() {
-//        if (_curPlayer.hasFoodSpoiled()) {
-//            if (_curPlayer.hasAllFoodSpoiled()) {
-//                _announcments.add(new GameAnnouncement(Constants.AllFoodSpoiled));
-//            } else {
-//                _announcments.add(new GameAnnouncement(Constants.SomeFoodSpoiled));
-//            }
-//        }
-//
-//    }
-//
-//    private void weekendEvent() {
-//        _announcments.add(new GameAnnouncement(_weekendEvent.toString()));
-//
-//    }
-
-    public void startGame() {
-        _curPlayerIndex = 0;
-        _curPlayer = _players.get(_curPlayerIndex);
-        
-        _curPlayer.gotoStartPosition();
-        _curPlayer.setClock(0);
-        _announcments.add(new GameAnnouncement(Constants.GoodLuck));
-        _hasStarted = true;
-
-    }
-
     public ArrayList<Player> getPlayers() {
         return _players;
     }
@@ -366,6 +126,19 @@ public class Game {
     public void setWeekendEvent(Action weekendEvent) {
         this._weekendEvent = weekendEvent;
     }
+    
+     
+    public int getTime() {
+        return _curPlayer.getState().getHour();
+    }
+
+    public int getWeek() {
+        return _curPlayer.getState().getWeeks();
+    }
+
+    public boolean isInside() {
+        return _curPlayer.getState().getPos().isInBuilding();
+    }
 
     
     /**     
@@ -381,16 +154,211 @@ public class Game {
        
        return result.toString();
     }
+    
+    // -- Game Logic -----------------------------------------------------------
+
+    /**
+     * Initializes the game. Adds Default buildings
+     * @param map
+     */
+    public Game(MapManager map) {
+        this._hasStarted = false;
+        this._hasEnded = false;      
+        
+        if (null == map) {
+            _map = MapManager.getDefaultMap();
+        } else {            
+            _map = map;
+        }
+
+        _players = new ArrayList<>();
+        _victors = new ArrayList<>();
+        _eventGen = new EventManager();
+        _economy = new ConstantEconomyModel();
+        _curPlayerIndex = -1;
+        _curPlayer = null;
+        _announcments = new ArrayList<>();
+    }
+
+    /**
+     * Adds a player to the game
+     *
+     * @param p player
+     * @return True if added successfully
+     */
+    public boolean addPlayer(Player p) {
+        if (_players.size() >= MAX_PLAYERS) {
+            return false;
+        }
+        _players.add(p);
+        return true;
+    }
+    
+    
+    private Player getNextPlayer() {
+        if (_players.isEmpty()) {
+            return null;
+        }
+
+        if (_players.size() - 1 > _curPlayerIndex) {
+            ++_curPlayerIndex;
+            return _players.get(_curPlayerIndex);
+        } else {
+            _curPlayerIndex = 0;
+            return _players.get(_curPlayerIndex);
+        }
+
+    }
+
+    /**
+     * Move player to a different position. If there's not enough time, end
+     * turn.
+     *
+     * @return True if the move was completed
+     * @param pos new position
+     */
+    public ActionResponse movePlayer(PlayerPosition pos) {
+        PlayerState state = _curPlayer.getState();
+        return state.movePlayer(pos, _map);
+//        Action event = _eventGen.getRandomRoadEvent(_curPlayer);
+//        event.perform (_curPlayer);
+
+//        Route route = Route.findRoute(_curPlayer.getState().getPos(), pos, _map);
+//        ArrayList<Movement> path = route.getMovementSequence();
+//        Iterator<Movement> iter = path.iterator();
+//        while (hasTime() && iter.hasNext()) {
+//            Movement move = iter.next();
+//            move.perform(_curPlayer.getState());//updates player state and calls 
+////            if (!hasTime()) {
+////                endTurn();
+////            }
+//
+//        }
+//        
+//        if (!hasTime() && iter.hasNext())
+//            return new ActionResponse(false, "Not enough time to complete move");
+//        else
+//            return new ActionResponse(true, null);
+        
+    }
+    
+    
+    // TODO - find out what this is actually meant to do, atm it's doing nothing
+    public void enterBuilding() {
+        PlayerPosition pos = _curPlayer.getState().getPos();
+        pos.enterBuilding();
+        movePlayer(pos);
+    }
+
+    public void leaveBuilding() {
+        PlayerPosition pos = _curPlayer.getState().getPos();
+        pos.exitBuilding();
+        movePlayer(pos);
+    }
+
+    private void changeEconomy() {
+        _economy.changeStocks();
+        _economy.changeBuildings(_map.buildingsIterator()); //prices + salaries 
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ActionResponse performBuildingAction(int actionIndex, ArrayList<Action> possibleActions) {
+        
+        ActionResponse result = _curPlayer.getState().performBuildingAction(actionIndex, _map, possibleActions);
+        if (null != result._message) {
+            _announcments.add(new GameAnnouncement(result._message+"\n"));
+        }
+        return result;
+
+    }
+
+    public boolean hasTime() {
+        return _curPlayer.getState().getHour() < TIMEUNITS_PER_WEEK;
+    }
+
+    /**
+     * Get all possible actions the current player can perform. If he is inside
+     * a building, returns the building's actions and an exit action Otherwise,
+     * returns all movements (a movement for each building)
+     *
+     * @return
+     */
+    public ArrayList<Action> getPossibleActions() {        
+        return _curPlayer.getPossibleActions(_map);      
+    } 
+
+    private void updateAnnouncements() {
+        _announcments.clear();
+        //weekendEvent();
+        //checkFood();
+        checkRent();
+        CheckClothes();
+        //checkRelative();
+    }
+
+    private void CheckClothes() {
+        if (_curPlayer.areClothesAboutToWare()) {
+            _announcments.add(new GameAnnouncement(Constants.Announcements.NeedNewClothes));
+        }
+
+    }
+
+    /**
+     * Rent model: The player starts with 4 WORs (weeks of rent), and a rent
+     * debt of 0. Every turn, one WOR is consumed. Whenever the player reaches 0
+     * week, he player receives an announcement (in condition that at least 4
+     * weeks have passed since the last announcement). Every week, if the player
+     * has 0 WOR (before consuming), the rent debt is increased by the value of
+     * 1 WOR. The debt is garnished from the player's wage, and prevent from
+     * signing a rent contract.
+     */
+    private void checkRent() {
+        if (_curPlayer.isRentDue() && 
+                (_curPlayer.getWeeks() - _curPlayer.getlastRentAnnouncement()) >= MIN_PERIOD_BETWEEN_RENT_ANNOUNCEMENTS) {
+            _announcments.add(new GameAnnouncement(Constants.Announcements.RentIsDue));
+        }
+
+    }
+
+    public void startGame() {
+        _curPlayerIndex = 0;
+        _curPlayer = _players.get(_curPlayerIndex);
+        
+        _curPlayer.gotoStartPosition();
+        _curPlayer.setClock(0);
+        _announcments.add(new GameAnnouncement(Constants.Announcements.GoodLuck));
+        _hasStarted = true;
+
+    }
+    
+        /**
+     * Advances game to the next player`s turn.
+     *
+     * @return True if any player has won
+     */
+    public boolean endTurn() {
+        checkVictory();
+        _curPlayer = getNextPlayer();        
+        if (_curPlayer != null) {
+            _curPlayer.startWeek();
+            
+        }
+        changeEconomy();
+        updateAnnouncements();
+        _curPlayer.consume();
+
+        return false;
+    }
 
     private boolean checkVictory() {
-                ArrayList<GameAnnouncement> vicorsAnnouncements = new ArrayList<>();
+        ArrayList<GameAnnouncement> vicorsAnnouncements = new ArrayList<>();
         // we check all players, even players who haven't this turn,
         // since they may win due to an economy change
         // (e.g. stocks rising, losing a job)
         for (Player p : _players) {
             if (p.hasWon()) {
                 _victors.add(p);
-                vicorsAnnouncements.add(new GameAnnouncement(p.getName()+Constants.HasWon));
+                vicorsAnnouncements.add(new GameAnnouncement(p.getName()+Constants.Announcements.HasWon));
             }
         }
         
@@ -404,10 +372,44 @@ public class Game {
             return true;
         }
         
-        return false;
-
-        
+        return false;   
     }
-
- 
+    
+    //    private void checkFood() {
+    //        if (_curPlayer.hasFoodSpoiled()) {
+    //            if (_curPlayer.hasAllFoodSpoiled()) {
+    //                _announcments.add(new GameAnnouncement(Constants.Announcements.AllFoodSpoiled));
+    //            } else {
+    //                _announcments.add(new GameAnnouncement(Constants.Announcements.SomeFoodSpoiled));
+    //            }
+    //        }
+    //
+    //    }
+    //
+    //    private void weekendEvent() {
+    //        _announcments.add(new GameAnnouncement(_weekendEvent.toString()));
+    //
+    //    }
+    
+    
+    //    private void checkRelative() {
+    //        int relativeHelp = _curPlayer.getSumOfRescueFromRelative();
+    //        if (relativeHelp > 0) {
+    //            _announcments.add(new GameAnnouncement(Constants.Announcements.ARelativeSentYou + relativeHelp + "$"));
+    //        }
+    //    }
+    
+    //    private String performAction(Action event, Player _curPlayer) {
+//        String result = event.perform(_curPlayer);
+//        return result; 
+////        if (!hasTime()) {
+////            endTurn();
+////
+    /// @param actionIndex}
+    /// @param possibleActions
+    /// @return 
+//
+//        
+//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }

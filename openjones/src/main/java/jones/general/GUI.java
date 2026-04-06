@@ -36,7 +36,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     protected Game _game;
     protected final Image _jonesImg;
     protected int _lastSelectedBuildingActionIndex;
-    private ArrayList<Action> _possibletActions;
+    private ArrayList<Action> _possibleActions;
     private GUIGraphics _guiGraphics;
     private MyGlassPane _glassPane;
     private static final int TILE_WIDTH = 155;
@@ -52,7 +52,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         _game = game;
         ImageIcon img = new ImageIcon("./images/jones.png");
         _jonesImg = img.getImage().getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
-        _possibletActions = null;
+        _possibleActions = null;
         initComponents2();
     }
     /**
@@ -563,10 +563,10 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
 
         //populate building panel
         if (curPos.isInBuilding()) {
-            _possibletActions = _game.getPossibletActions();
+            _possibleActions = _game.getPossibleActions();
             //_buildingActionLabels = new JLabel
             int actionID = 0;
-            for (Action a : _possibletActions) {
+            for (Action a : _possibleActions) {
                 javax.swing.JLabel label = new javax.swing.JLabel();
                 if (null != a) {
                     label.setText(a.toString());
@@ -601,8 +601,8 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         experiencesText.setText(_game.getCurPlayer().getExperiences().toString());
     }
 
-    public ArrayList<Action> getPossibletActions() {
-        return _possibletActions;
+    public ArrayList<Action> getPossibleActions() {
+        return _possibleActions;
     }
 
     public int getLastSelectedBuildingActionIndex() {
