@@ -20,7 +20,7 @@ jobs:
             java-version: '21'
             distribution: 'temurin'
       - name: Ant build
-        run: ant compile
+        run: ant -f openjones/build.xml compile
 
       - name: Ant test
         run: ant test
