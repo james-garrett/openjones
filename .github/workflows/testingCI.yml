@@ -23,5 +23,5 @@ jobs:
         run: ant -f openjones/build.xml compile
 
       - name: Ant test
-        run: ant test
+        run: ant -f openjones/build.xml test
     
