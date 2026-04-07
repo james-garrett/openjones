@@ -285,7 +285,7 @@ public class GameTest {
         gameInstance.addPlayer(realPlayer);
         gameInstance.startGame();
         
-        gameInstance.performBuildingAction(0, realMap,)
+//        gameInstance.performBuildingAction(0, realMap,)
         
         int actionIndex = 0;
         ArrayList<Action> possibleActions = null;

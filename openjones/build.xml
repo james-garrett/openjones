@@ -10,6 +10,23 @@
 <project name="openjones" default="default" basedir=".">
     <description>Builds, tests, and runs the project openjones.</description>
     <import file="nbproject/build-impl.xml"/>
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="lib.dir" value="lib"/>
+
+    <target name="print-classpath">
+        <pathconvert property="cp.str" refid="test.classpath"/>
+        <echo message="Classpath: ${cp.str}"/>
+    </target>
+
+    <target name="list-jars">
+        <echo message="JARs found in lib/:"/>
+        <fileset id="lib.jars" dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <pathconvert pathsep="${line.separator}" property="jar.list" refid="lib.jars"/>
+        <echo message="${jar.list}"/>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 
