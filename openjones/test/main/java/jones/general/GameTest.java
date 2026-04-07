@@ -8,18 +8,17 @@ import java.util.ArrayList;
 import main.java.jones.actions.Action;
 import main.java.jones.actions.ActionResponse;
 import main.java.jones.map.House;
-import main.java.jones.map.LowCostHousing;
 import main.java.jones.map.MapManager;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

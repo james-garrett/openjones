@@ -1,0 +1,27 @@
+name: Test Runner
+
+on: 
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v3
+        with:
+            java-version: '25'
+            distribution: 'oracle'
+      - name: Ant build
+        run: ant compile
+
+      - name: Ant test
+        run: ant test
+    
